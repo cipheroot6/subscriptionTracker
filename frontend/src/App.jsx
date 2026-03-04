@@ -7,13 +7,9 @@ function Home() {
   const [backendStatus, setBackendStatus] = useState('Checking...')
 
   useEffect(() => {
-    api.get('/auth/test')
+    api.get('/health')
       .then(() => setBackendStatus('Connected'))
-      .catch(() => {
-        api.get('/')
-          .then(() => setBackendStatus('Connected (no auth)'))
-          .catch(() => setBackendStatus('Disconnected'))
-      })
+      .catch(() => setBackendStatus('Disconnected'))
   }, [])
 
   return (

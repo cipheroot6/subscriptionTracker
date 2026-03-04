@@ -10,7 +10,7 @@ export const createSubscription = async (req, res, next) => {
     });
 
     const { workflowRunId } = await workflowClient.trigger({
-      url: `${SERVER_URL}/api/v1/workflows/subscription/reminder`,
+      url: `${SERVER_URL}/api/v1/workflow/subscription/reminder`,
       body: {
         subscriptionId: subscription._id,
       },
@@ -50,7 +50,6 @@ export const deleteUserSubscription = async (req, res, next) => {
       status: false,
       message: "Internal server error",
     });
-    next(error);
   }
 }
 

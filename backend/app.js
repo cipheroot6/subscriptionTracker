@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import userRouter from "./routes/user.routers.js";
 import authRouter from "./routes/auth.routers.js";
 import subscriptionRouter from "./routes/subscription.routes.js";
@@ -10,6 +11,15 @@ import workflowRouter from "./routes/workflow.routes.js";
 
 const app = express();
 
+app.use(
+  cors({
+    origin:
+      process.env.NODE_ENV === "production"
+        ? process.env.CLIENT_URL // e.g. https://your-app.vercel.app
+        : "http://localhost:5173",
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -31,6 +41,8 @@ app.use("/api/v1/subscription", subscriptionRouter);
 app.use("/api/v1/workflow", workflowRouter);
 app.use(errorMiddleware);
 
+app.get("/api/v1", (req, res) => res.status(200).json({ status: "ok" }));
+app.get("/api/v1/health", (req, res) => res.status(200).json({ status: "ok" }));
 app.get("/", (req, res) => res.send("Welcome"));
 
 export default app;

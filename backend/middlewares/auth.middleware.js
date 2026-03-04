@@ -61,7 +61,6 @@ const loggedInAsAdmin = async (req, res, next) => {
   } catch (error) {
     console.log(error);
     res.status(401).json({ message: "Internal server error" });
-    next(error);
   }
 };
 export { authorize };
