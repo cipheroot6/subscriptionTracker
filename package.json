@@ -1,6 +1,7 @@
 {
   "name": "subscription-tracker",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "npm run build:frontend",
     "build:frontend": "cd frontend && npm install && npm run build",
