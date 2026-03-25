@@ -1,4 +1,37 @@
-**/node_modules
-**/packege-lock.json
-**/.env*
-.vercel
+# Dependencies
+**/node_modules/
+
+# Build output
+**/dist/
+dist-ssr
+
+# Environment files — NEVER commit these
+**/.env
+**/.env.*
+**/.env.*.local
+
+# Lock files (optional — remove these lines if you want to track them)
+# **/package-lock.json
+
+# Logs
+**/*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Vercel
+.vercel/
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
