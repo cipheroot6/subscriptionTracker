@@ -75,6 +75,10 @@ export const signIn = async (req, res, next) => {
       throw error;
     }
 
+    if (!JWT_SECRET) {
+      throw new Error("JWT_SECRET missing");
+    }
+
     const token = jwt.sign({ userid: user._id, role: user.role }, JWT_SECRET, {
       expiresIn: JWT_EXPIRES_IN,
     });
