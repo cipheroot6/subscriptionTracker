@@ -97,3 +97,11 @@ export const signIn = async (req, res, next) => {
 };
 
 export const signOut = async (req, res, next) => {};
+
+export const forgotPassword = async (req, res, next) => {
+  try {
+    res.send({ title: "Forgot password" });
+  } catch (error) {
+    next(error);
+  }
+};

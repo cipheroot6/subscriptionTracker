@@ -1,0 +1,112 @@
+/* Reuses .modal-backdrop from AddSubscriptionModal */
+
+.delete-modal-card {
+  background-color: #111113;
+  border: 1px solid #27272a;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem 1.75rem;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.delete-modal-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fca5a5;
+  margin-bottom: 0.25rem;
+}
+
+.delete-modal-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.delete-modal-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #f4f4f5;
+  letter-spacing: -0.02em;
+}
+
+.delete-modal-body {
+  font-size: 0.875rem;
+  color: #71717a;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+
+.delete-modal-body strong {
+  color: #a1a1aa;
+  font-weight: 500;
+}
+
+.modal-error {
+  background-color: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  color: #fca5a5;
+  font-size: 0.8125rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.delete-modal-footer {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.delete-modal-footer .modal-cancel-btn {
+  flex: 1;
+  padding: 0.625rem 1rem;
+  background: transparent;
+  border: 1px solid #27272a;
+  border-radius: 8px;
+  color: #71717a;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.delete-modal-footer .modal-cancel-btn:hover {
+  background-color: #18181b;
+  color: #a1a1aa;
+}
+
+.delete-confirm-btn {
+  flex: 1;
+  padding: 0.625rem 1rem;
+  background-color: #ef4444;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background-color 0.15s ease;
+}
+
+.delete-confirm-btn:hover { background-color: #dc2626; }
+
+.delete-confirm-btn:disabled,
+.delete-modal-footer .modal-cancel-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

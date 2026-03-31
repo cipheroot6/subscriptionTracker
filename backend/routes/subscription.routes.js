@@ -3,21 +3,26 @@ import {
   createSubscription,
   getAllSubscriptions,
   getUserSubscriptions,
+  deleteUserSubscription
 } from "../controllers/subscription.controller.js";
 import { authorize, loggedInAsAdmin } from "../middlewares/auth.middleware.js";
 
 const subscriptionRouter = Router();
 
+subscriptionRouter.use(authorize);
+
 // Admin routes
 subscriptionRouter.get("/", loggedInAsAdmin, getAllSubscriptions);
 
-subscriptionRouter.delete("/", loggedInAsAdmin, );
+subscriptionRouter.delete("/", loggedInAsAdmin, (req, res) => {
+  res.status(501).json({ success: false, message: "Not implemented" });
+});
 
 // User routes
 
-subscriptionRouter.post("/user/create", authorize, createSubscription);
+subscriptionRouter.post("/user/create", createSubscription);
 
-subscriptionRouter.get("/user/:id", authorize, getUserSubscriptions);
+subscriptionRouter.get("/user/:id", getUserSubscriptions);
 
 subscriptionRouter.get("/upcoming-renewals", (req, res) => {
   res.send({ title: "GET upcoming renewals" });
@@ -31,9 +36,7 @@ subscriptionRouter.get("/:id", (req, res) => {
   res.send({ title: "GET subscription details" });
 });
 
-subscriptionRouter.delete("/:id", (req, res) => {
-  res.send({ title: "DELETE subscription" });
-});
+subscriptionRouter.delete("/:id", deleteUserSubscription);
 
 subscriptionRouter.put("/:id", (req, res) => {
   res.send({ title: "UPDATE subscription" });

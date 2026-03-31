@@ -43,6 +43,6 @@ app.use(errorMiddleware);
 
 app.get("/api/v1", (req, res) => res.status(200).json({ status: "ok" }));
 app.get("/api/v1/health", (req, res) => res.status(200).json({ status: "ok" }));
-app.get("/", (req, res) => res.send("Welcome"));
+// app.get("/", (req, res) => res.send("Welcome"));
 
 export default app;

@@ -201,7 +201,6 @@ export default function SignIn() {
       <div className="signin-branding">
         <div className="branding-content">
           <div className="branding-logo-row">
-            {/* Update filename if your logo is .png or another format */}
             <img
               src="/logo.png"
               alt="SubTracker logo"

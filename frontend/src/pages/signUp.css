@@ -41,6 +41,19 @@
     overflow: hidden;
   }
 
+  .branding-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    justify-content: center; /* keeps it centered like your current design */
+  }
+
+  .branding-logo {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+  }
+
   /* Dot pattern background */
   .signup-branding::before {
     content: "";
@@ -129,7 +142,6 @@
     color: #d4d4d8;
     font-weight: 700;
   }
-
 
   /* Form card — desktop */
   .signup-card {
@@ -267,7 +279,9 @@
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
   font-family: inherit;
 }
 
