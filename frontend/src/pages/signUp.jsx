@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../lib/api";
+import { useAuth } from "../context/AuthContext";
 import "./signUp.css";
 
 const GoogleIcon = () => (
@@ -74,6 +75,7 @@ const getPasswordStrength = (password) => {
 };
 
 export default function SignUp() {
+  const { signIn } = useAuth();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -119,8 +121,8 @@ export default function SignUp() {
     try {
       const { confirmPassword, ...submitData } = formData;
       const res = await api.post("/auth/sign-up", submitData);
-      const { token } = res.data.data;
-      localStorage.setItem("token", token);
+      const { token, user } = res.data.data;
+      signIn(token, user);
       window.location.href = "/";
     } catch (err) {
       setError(
@@ -277,7 +279,7 @@ export default function SignUp() {
         </form>
 
         <p className="signup-footer">
-          Already have an account? <Link to="/login">Login</Link>
+          Already have an account? <Link to="/sign-in">Sign in</Link>
         </p>
       </div>
 

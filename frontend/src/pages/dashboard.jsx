@@ -16,6 +16,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const fetchSubscriptions = useCallback(async () => {
     if (!user?._id) return;
@@ -37,16 +38,26 @@ export default function Dashboard() {
 
   return (
     <div className="dashboard-layout">
-      <Sidebar />
+      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       <main className="dashboard-main">
         {/* Page header */}
         <div className="dashboard-header">
-          <div>
-            <h1 className="dashboard-title">Dashboard</h1>
-            <p className="dashboard-welcome">
-              Welcome back{user?.name ? `, ${user.name.split(' ')[0]}` : ''}
-            </p>
+          <div className="dashboard-header-left">
+            {/* Hamburger — only visible on mobile */}
+            <button
+              className="sidebar-toggle-btn"
+              onClick={() => setSidebarOpen(true)}
+              aria-label="Open sidebar"
+            >
+              <span /><span /><span />
+            </button>
+            <div>
+              <h1 className="dashboard-title">Dashboard</h1>
+              <p className="dashboard-welcome">
+                Welcome back{user?.name ? `, ${user.name.split(' ')[0]}` : ''}
+              </p>
+            </div>
           </div>
           <button className="dashboard-add-btn" onClick={() => setShowAddModal(true)}>
             + Add Subscription

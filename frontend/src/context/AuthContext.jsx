@@ -50,7 +50,7 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
-  const login = (newToken, userData) => {
+  const signIn = (newToken, userData) => {
     localStorage.setItem('token', newToken);
     localStorage.setItem('user', JSON.stringify(userData));
     setToken(newToken);
@@ -63,7 +63,7 @@ export function AuthProvider({ children }) {
     localStorage.removeItem('user');
     setToken(null);
     setUser(null);
-    window.location.href = '/login';
+    window.location.href = '/sign-in';
   };
 
   return (
@@ -71,7 +71,7 @@ export function AuthProvider({ children }) {
       user,
       token,
       loading,
-      login,
+      signIn,
       logout,
       isAuthenticated: !!token,
     }}>

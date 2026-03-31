@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../lib/api";
-import "./login.css";
+import { useAuth } from "../context/AuthContext";
+import "./signin.css";
 
 const GoogleIcon = () => (
   <svg viewBox="0 0 24 24" fill="none">
@@ -59,6 +60,7 @@ const EyeOffIcon = () => (
 );
 
 export default function SignIn() {
+  const { signIn } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -84,8 +86,8 @@ export default function SignIn() {
     setLoading(true);
     try {
       const res = await api.post("/auth/sign-in", formData);
-      const { token } = res.data.data;
-      localStorage.setItem("token", token);
+      const { token, user } = res.data.data;
+      signIn(token, user);
       window.location.href = "/";
     } catch (err) {
       setError(
@@ -106,7 +108,7 @@ export default function SignIn() {
     <div className="signin-page">
       <div className="signin-card">
         <div className="signin-header">
-          <h1>Login</h1>
+          <h1>Sign in</h1>
           <p>Welcome back to your account</p>
         </div>
 
@@ -189,7 +191,7 @@ export default function SignIn() {
             id="signin-submit-btn"
             disabled={loading}
           >
-            {loading ? "Logging in\u2026" : "Login"}
+            {loading ? "Signing in…" : "Sign in"}
           </button>
         </form>
 

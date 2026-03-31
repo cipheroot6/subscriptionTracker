@@ -9,20 +9,22 @@ export const createSubscription = async (req, res, next) => {
       user: req.user._id,
     });
 
-    const { workflowRunId } = await workflowClient.trigger({
-      url: `${SERVER_URL}/api/v1/workflow/subscription/reminder`,
-      body: {
-        subscriptionId: subscription._id,
-      },
-      headers: {
-        "content-type": "application/json",
-      },
-      retries: 0,
-    });
+    // Trigger workflow separately — don't let a trigger failure
+    // kill the subscription creation or return an error to the client.
+    try {
+      await workflowClient.trigger({
+        url: `${SERVER_URL}/api/v1/workflow/subscription/reminder`,
+        body: { subscriptionId: subscription._id },
+        headers: { 'content-type': 'application/json' },
+        retries: 0,
+      });
+    } catch (triggerErr) {
+      console.error('Workflow trigger failed (subscription still created):', triggerErr?.message);
+    }
 
     res.status(201).json({
       success: true,
-      data: subscription
+      data: subscription,
     });
   } catch (error) {
     next(error);
@@ -33,30 +35,25 @@ export const deleteUserSubscription = async (req, res, next) => {
   try {
     const SubscriptionIs = await Subscription.findByIdAndDelete(req.params.id);
 
-    if(!SubscriptionIs){
-      const error = new Error("Subscription not found");
-      error.status = 404
+    if (!SubscriptionIs) {
+      const error = new Error('Subscription not found');
+      error.status = 404;
       throw error;
     }
 
     res.status(200).json({
       status: true,
-      message: "Subscription deleted sucessfully",
+      message: 'Subscription deleted successfully',
       data: SubscriptionIs,
-    })
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      status: false,
-      message: "Internal server error",
     });
+  } catch (error) {
+    next(error);
   }
-}
+};
 
 export const getUserSubscriptions = async (req, res, next) => {
   try {
-    // check if the user is the owner
-    if(req.user.id !== req.params.id) {
+    if (req.user.id !== req.params.id) {
       const error = new Error('You are not the owner of this account');
       error.status = 401;
       throw error;
@@ -66,22 +63,22 @@ export const getUserSubscriptions = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      data: subscriptions
+      data: subscriptions,
     });
   } catch (error) {
     next(error);
   }
-}
+};
 
 export const getAllSubscriptions = async (req, res, next) => {
   try {
     const allSubscriptions = await Subscription.find();
 
     res.status(200).json({
-    status: true,
-    data: allSubscriptions
+      status: true,
+      data: allSubscriptions,
     });
   } catch (error) {
     next(error);
   }
-}
+};

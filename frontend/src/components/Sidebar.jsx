@@ -33,6 +33,12 @@ const LogOutIcon = () => (
   </svg>
 );
 
+const XIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+  </svg>
+);
+
 const navItems = [
   { to: '/', label: 'Dashboard', icon: <GridIcon />, end: true },
   { to: '/settings', label: 'Settings', icon: <SettingsIcon /> },
@@ -42,47 +48,60 @@ function getInitials(name = '') {
   return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2) || '?';
 }
 
-export default function Sidebar() {
+export default function Sidebar({ isOpen, onClose }) {
   const { user, logout } = useAuth();
 
   return (
-    <aside className="sidebar">
-      {/* Logo */}
-      <div className="sidebar-logo">
-        <img src="/logo.png" alt="SubTracker" className="sidebar-logo-img" />
-        <span className="sidebar-logo-text">SubTracker</span>
-      </div>
+    <>
+      {/* Mobile overlay — tap outside to close */}
+      {isOpen && (
+        <div className="sidebar-overlay" onClick={onClose} aria-hidden="true" />
+      )}
 
-      {/* Nav */}
-      <nav className="sidebar-nav">
-        {navItems.map(({ to, label, icon, end }) => (
-          <NavLink
-            key={to}
-            to={to}
-            end={end}
-            className={({ isActive }) =>
-              `sidebar-nav-item${isActive ? ' active' : ''}`
-            }
-          >
-            <span className="sidebar-nav-icon">{icon}</span>
-            <span>{label}</span>
-          </NavLink>
-        ))}
-      </nav>
-
-      {/* Bottom: user + logout */}
-      <div className="sidebar-footer">
-        <div className="sidebar-user">
-          <div className="sidebar-avatar">{getInitials(user?.name)}</div>
-          <div className="sidebar-user-info">
-            <span className="sidebar-user-name">{user?.name || '—'}</span>
-            <span className="sidebar-user-email">{user?.email || ''}</span>
-          </div>
-        </div>
-        <button className="sidebar-logout" onClick={logout} title="Log out">
-          <LogOutIcon />
+      <aside className={`sidebar${isOpen ? ' sidebar--open' : ''}`}>
+        {/* Mobile close button (top-right of sidebar) */}
+        <button className="sidebar-close-btn" onClick={onClose} aria-label="Close sidebar">
+          <XIcon />
         </button>
-      </div>
-    </aside>
+
+        {/* Logo */}
+        <div className="sidebar-logo">
+          <img src="/logo.png" alt="SubTracker" className="sidebar-logo-img" />
+          <span className="sidebar-logo-text">SubTracker</span>
+        </div>
+
+        {/* Nav */}
+        <nav className="sidebar-nav">
+          {navItems.map(({ to, label, icon, end }) => (
+            <NavLink
+              key={to}
+              to={to}
+              end={end}
+              className={({ isActive }) =>
+                `sidebar-nav-item${isActive ? ' active' : ''}`
+              }
+              onClick={onClose}
+            >
+              <span className="sidebar-nav-icon">{icon}</span>
+              <span>{label}</span>
+            </NavLink>
+          ))}
+        </nav>
+
+        {/* Bottom: user + logout */}
+        <div className="sidebar-footer">
+          <div className="sidebar-user">
+            <div className="sidebar-avatar">{getInitials(user?.name)}</div>
+            <div className="sidebar-user-info">
+              <span className="sidebar-user-name">{user?.name || '—'}</span>
+              <span className="sidebar-user-email">{user?.email || ''}</span>
+            </div>
+          </div>
+          <button className="sidebar-logout" onClick={logout} title="Log out">
+            <LogOutIcon />
+          </button>
+        </div>
+      </aside>
+    </>
   );
 }

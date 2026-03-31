@@ -21,6 +21,12 @@
   gap: 1rem;
 }
 
+.dashboard-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .dashboard-title {
   font-size: 1.5rem;
   font-weight: 700;
@@ -93,9 +99,50 @@
   .dashboard-charts-row { flex-direction: column; }
 }
 
+/* ── Hamburger toggle button ─────────────────────────────── */
+.sidebar-toggle-btn {
+  display: none; /* hidden on desktop */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  background: none;
+  border: 1px solid #27272a;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.sidebar-toggle-btn span {
+  display: block;
+  width: 16px;
+  height: 2px;
+  background-color: #a1a1aa;
+  border-radius: 2px;
+  transition: background-color 0.15s ease;
+}
+
+.sidebar-toggle-btn:hover {
+  background-color: #18181b;
+  border-color: #3f3f46;
+}
+
+.sidebar-toggle-btn:hover span {
+  background-color: #f4f4f5;
+}
+
+/* ── Mobile ─────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .dashboard-main {
     margin-left: 0;
     padding: 1.25rem;
+  }
+
+  .sidebar-toggle-btn {
+    display: flex;
   }
 }

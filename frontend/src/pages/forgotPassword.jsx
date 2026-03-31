@@ -103,7 +103,7 @@ export default function ForgotPassword() {
 
         <p className="forgot-footer">
           <ArrowLeftIcon />
-          <Link to="/login">Back to login</Link>
+          <Link to="/sign-in">Back to sign in</Link>
         </p>
       </div>
     </div>
