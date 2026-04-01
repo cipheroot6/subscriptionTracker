@@ -1,6 +1,6 @@
-import Subscription from '../models/subscription.model.js';
-import { workflowClient } from '../config/upstash.js';
-import { SERVER_URL } from '../config/env.js';
+import Subscription from "../models/subscription.model.js";
+import { workflowClient } from "../config/upstash.js";
+import { SERVER_URL } from "../config/env.js";
 
 export const createSubscription = async (req, res, next) => {
   try {
@@ -15,11 +15,14 @@ export const createSubscription = async (req, res, next) => {
       await workflowClient.trigger({
         url: `${SERVER_URL}/api/v1/workflow/subscription/reminder`,
         body: { subscriptionId: subscription._id },
-        headers: { 'content-type': 'application/json' },
+        headers: { "content-type": "application/json" },
         retries: 0,
       });
     } catch (triggerErr) {
-      console.error('Workflow trigger failed (subscription still created):', triggerErr?.message);
+      console.error(
+        "Workflow trigger failed (subscription still created):",
+        triggerErr?.message,
+      );
     }
 
     res.status(201).json({
@@ -31,20 +34,32 @@ export const createSubscription = async (req, res, next) => {
   }
 };
 
-export const deleteUserSubscription = async (req, res, next) => {
+export const deleteSubscription = async (req, res, next) => {
   try {
-    const SubscriptionIs = await Subscription.findByIdAndDelete(req.params.id);
+    const subscription = await Subscription.findById(req.params.id);
 
-    if (!SubscriptionIs) {
-      const error = new Error('Subscription not found');
+    if (!subscription) {
+      const error = new Error("Subscription not found");
       error.status = 404;
       throw error;
     }
 
+    // Allow if owner OR admin
+    if (
+      subscription.user.toString() !== req.user.id &&
+      req.user.role !== "admin"
+    ) {
+      const error = new Error("Not authorized");
+      error.status = 403;
+      throw error;
+    }
+
+    await subscription.deleteOne();
+
     res.status(200).json({
-      status: true,
-      message: 'Subscription deleted successfully',
-      data: SubscriptionIs,
+      success: true,
+      message: "Subscription deleted successfully",
+      data: subscription,
     });
   } catch (error) {
     next(error);
@@ -54,7 +69,7 @@ export const deleteUserSubscription = async (req, res, next) => {
 export const getUserSubscriptions = async (req, res, next) => {
   try {
     if (req.user.id !== req.params.id) {
-      const error = new Error('You are not the owner of this account');
+      const error = new Error("You are not the owner of this account");
       error.status = 401;
       throw error;
     }
