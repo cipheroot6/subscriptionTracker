@@ -8,23 +8,17 @@ const GridIcon = () => (
     <rect x="14" y="14" width="7" height="7" /><rect x="3" y="14" width="7" height="7" />
   </svg>
 );
-
-const ListIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="8" y1="6" x2="21" y2="6" /><line x1="8" y1="12" x2="21" y2="12" />
-    <line x1="8" y1="18" x2="21" y2="18" />
-    <line x1="3" y1="6" x2="3.01" y2="6" /><line x1="3" y1="12" x2="3.01" y2="12" />
-    <line x1="3" y1="18" x2="3.01" y2="18" />
-  </svg>
-);
-
 const SettingsIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="12" cy="12" r="3" />
     <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
   </svg>
 );
-
+const ShieldIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+  </svg>
+);
 const LogOutIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
@@ -32,17 +26,17 @@ const LogOutIcon = () => (
     <line x1="21" y1="12" x2="9" y2="12" />
   </svg>
 );
-
 const XIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
   </svg>
 );
 
-const navItems = [
+const baseNavItems = [
   { to: '/', label: 'Dashboard', icon: <GridIcon />, end: true },
   { to: '/settings', label: 'Settings', icon: <SettingsIcon /> },
 ];
+const adminNavItem = { to: '/admin', label: 'Admin', icon: <ShieldIcon /> };
 
 function getInitials(name = '') {
   return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2) || '?';
@@ -50,27 +44,19 @@ function getInitials(name = '') {
 
 export default function Sidebar({ isOpen, onClose }) {
   const { user, logout } = useAuth();
+  const navItems = user?.role === 'admin' ? [...baseNavItems, adminNavItem] : baseNavItems;
 
   return (
     <>
-      {/* Mobile overlay — tap outside to close */}
-      {isOpen && (
-        <div className="sidebar-overlay" onClick={onClose} aria-hidden="true" />
-      )}
-
+      {isOpen && <div className="sidebar-overlay" onClick={onClose} aria-hidden="true" />}
       <aside className={`sidebar${isOpen ? ' sidebar--open' : ''}`}>
-        {/* Mobile close button (top-right of sidebar) */}
         <button className="sidebar-close-btn" onClick={onClose} aria-label="Close sidebar">
           <XIcon />
         </button>
-
-        {/* Logo */}
         <div className="sidebar-logo">
           <img src="/logo.png" alt="SubTracker" className="sidebar-logo-img" />
           <span className="sidebar-logo-text">SubTracker</span>
         </div>
-
-        {/* Nav */}
         <nav className="sidebar-nav">
           {navItems.map(({ to, label, icon, end }) => (
             <NavLink
@@ -78,7 +64,7 @@ export default function Sidebar({ isOpen, onClose }) {
               to={to}
               end={end}
               className={({ isActive }) =>
-                `sidebar-nav-item${isActive ? ' active' : ''}`
+                `sidebar-nav-item${isActive ? ' active' : ''}${to === '/admin' ? ' sidebar-nav-item--admin' : ''}`
               }
               onClick={onClose}
             >
@@ -87,8 +73,6 @@ export default function Sidebar({ isOpen, onClose }) {
             </NavLink>
           ))}
         </nav>
-
-        {/* Bottom: user + logout */}
         <div className="sidebar-footer">
           <div className="sidebar-user">
             <div className="sidebar-avatar">{getInitials(user?.name)}</div>

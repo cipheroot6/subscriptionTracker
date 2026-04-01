@@ -225,3 +225,16 @@
     to   { opacity: 1; }
   }
 }
+
+/* Admin nav item accent */
+.sidebar-nav-item--admin {
+  color: #7c3aed;
+}
+.sidebar-nav-item--admin:hover {
+  color: #a78bfa;
+  background-color: rgba(124, 58, 237, 0.08);
+}
+.sidebar-nav-item--admin.active {
+  color: #c084fc;
+  background-color: rgba(124, 58, 237, 0.12);
+}

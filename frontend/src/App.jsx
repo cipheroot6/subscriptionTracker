@@ -4,7 +4,10 @@ import SignUp from './pages/signUp'
 import SignIn from './pages/signin'
 import ForgetPassword from './pages/forgotPassword'
 import Dashboard from './pages/dashboard'
+import Settings from './pages/settings'
+import Admin from './pages/admin'
 import ProtectedRoute from './components/protectedRoutes'
+import AdminRoute from './components/AdminRoute'
 
 function App() {
   return (
@@ -16,6 +19,16 @@ function App() {
         <ProtectedRoute>
           <Dashboard />
         </ProtectedRoute>
+      } />
+      <Route path="/settings" element={
+        <ProtectedRoute>
+          <Settings />
+        </ProtectedRoute>
+      } />
+      <Route path="/admin" element={
+        <AdminRoute>
+          <Admin />
+        </AdminRoute>
       } />
     </Routes>
   )
