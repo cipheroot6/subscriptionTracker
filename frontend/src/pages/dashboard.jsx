@@ -4,9 +4,8 @@ import api from '../lib/api';
 import Sidebar from '../components/Sidebar';
 import SummaryCards from '../components/dashboard/SummaryCards';
 import BudgetBar from '../components/dashboard/BudgetBar';
-import CategoryChart from '../components/dashboard/CategoryChart';
 import UpcomingRenewals from '../components/dashboard/UpcomingRenewals';
-import SubscriptionList from '../components/dashboard/SubscriptionList';
+import RecentActivity from '../components/dashboard/RecentActivity';
 import AddSubscriptionModal from '../components/modals/AddSubscriptionModal';
 import './dashboard.css';
 
@@ -32,24 +31,16 @@ export default function Dashboard() {
     }
   }, [user?._id]);
 
-  useEffect(() => {
-    fetchSubscriptions();
-  }, [fetchSubscriptions]);
+  useEffect(() => { fetchSubscriptions(); }, [fetchSubscriptions]);
 
   return (
     <div className="dashboard-layout">
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       <main className="dashboard-main">
-        {/* Page header */}
         <div className="dashboard-header">
           <div className="dashboard-header-left">
-            {/* Hamburger — only visible on mobile */}
-            <button
-              className="sidebar-toggle-btn"
-              onClick={() => setSidebarOpen(true)}
-              aria-label="Open sidebar"
-            >
+            <button className="sidebar-toggle-btn" onClick={() => setSidebarOpen(true)} aria-label="Open sidebar">
               <span /><span /><span />
             </button>
             <div>
@@ -71,34 +62,23 @@ export default function Dashboard() {
           </div>
         )}
 
-        {/* Summary cards */}
         <SummaryCards subscriptions={subscriptions} loading={loading} />
-
-        {/* Budget bar */}
         {!loading && <BudgetBar subscriptions={subscriptions} />}
 
-        {/* Charts row */}
-        <div className="dashboard-charts-row">
-          <CategoryChart subscriptions={subscriptions} />
+        <div className="dashboard-bottom-row">
           <UpcomingRenewals subscriptions={subscriptions} />
+          <RecentActivity
+            subscriptions={subscriptions}
+            loading={loading}
+            onAdd={() => setShowAddModal(true)}
+          />
         </div>
-
-        {/* Subscription list */}
-        <SubscriptionList
-          subscriptions={subscriptions}
-          loading={loading}
-          onRefresh={fetchSubscriptions}
-          onAdd={() => setShowAddModal(true)}
-        />
       </main>
 
       {showAddModal && (
         <AddSubscriptionModal
           onClose={() => setShowAddModal(false)}
-          onSuccess={() => {
-            setShowAddModal(false);
-            fetchSubscriptions();
-          }}
+          onSuccess={() => { setShowAddModal(false); fetchSubscriptions(); }}
         />
       )}
     </div>

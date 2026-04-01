@@ -1,0 +1,57 @@
+.sd-card {
+  background: #111113;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.sd-title { font-size: 0.9375rem; font-weight: 600; color: #f1f5f9; margin: 0 0 2px; }
+.sd-sub   { font-size: 0.75rem; color: #64748b; margin: 0 0 1.5rem; }
+
+.sd-body {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.sd-ring-wrap {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.sd-ring {
+  width: 100px; height: 100px;
+  border-radius: 50%;
+  mask: radial-gradient(transparent 34px, black 35px);
+  -webkit-mask: radial-gradient(transparent 34px, black 35px);
+}
+
+.sd-ring-center {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.sd-ring-total { display: block; font-size: 1.125rem; font-weight: 700; color: #f1f5f9; }
+.sd-ring-label { font-size: 0.625rem; color: #64748b; }
+
+.sd-legend { display: flex; flex-direction: column; gap: 10px; }
+
+.sd-legend-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sd-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.sd-legend-label { font-size: 0.8125rem; color: #94a3b8; flex: 1; }
+.sd-legend-right { display: flex; align-items: center; gap: 10px; }
+.sd-legend-count { font-size: 0.875rem; font-weight: 600; color: #e2e8f0; min-width: 20px; text-align: right; }
+.sd-legend-pct   { font-size: 0.75rem; color: #475569; min-width: 30px; text-align: right; }
+
+@media (max-width: 400px) {
+  .sd-body { grid-template-columns: 1fr; }
+  .sd-ring-wrap { margin: 0 auto; }
+}

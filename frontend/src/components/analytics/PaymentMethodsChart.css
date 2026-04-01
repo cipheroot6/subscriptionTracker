@@ -1,0 +1,44 @@
+.pmc-card {
+  background: #111113;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.pmc-title { font-size: 0.9375rem; font-weight: 600; color: #f1f5f9; margin: 0 0 2px; }
+.pmc-sub   { font-size: 0.75rem; color: #64748b; margin: 0 0 1.25rem; }
+.pmc-empty { color: #475569; font-size: 0.875rem; padding: 1.5rem 0; text-align: center; }
+
+.pmc-list { display: flex; flex-direction: column; gap: 16px; }
+
+.pmc-row { display: flex; flex-direction: column; gap: 6px; }
+
+.pmc-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.pmc-dot-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.pmc-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.pmc-method { font-size: 0.875rem; color: #e2e8f0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pmc-count  { font-size: 0.75rem; color: #475569; white-space: nowrap; }
+
+.pmc-values { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.pmc-pct    { font-size: 0.75rem; color: #64748b; min-width: 28px; text-align: right; }
+.pmc-amount { font-size: 0.875rem; font-weight: 500; color: #f1f5f9; min-width: 80px; text-align: right; }
+
+.pmc-bar-track {
+  height: 5px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.pmc-bar-fill { height: 100%; border-radius: 3px; transition: width 0.4s ease; }

@@ -8,6 +8,19 @@ const GridIcon = () => (
     <rect x="14" y="14" width="7" height="7" /><rect x="3" y="14" width="7" height="7" />
   </svg>
 );
+const CreditCardIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+    <line x1="1" y1="10" x2="23" y2="10" />
+  </svg>
+);
+const BarChartIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="18" y1="20" x2="18" y2="10" />
+    <line x1="12" y1="20" x2="12" y2="4" />
+    <line x1="6" y1="20" x2="6" y2="14" />
+  </svg>
+);
 const SettingsIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="12" cy="12" r="3" />
@@ -34,6 +47,8 @@ const XIcon = () => (
 
 const baseNavItems = [
   { to: '/', label: 'Dashboard', icon: <GridIcon />, end: true },
+  { to: '/subscriptions', label: 'Subscriptions', icon: <CreditCardIcon /> },
+  { to: '/analytics', label: 'Analytics', icon: <BarChartIcon /> },
   { to: '/settings', label: 'Settings', icon: <SettingsIcon /> },
 ];
 const adminNavItem = { to: '/admin', label: 'Admin', icon: <ShieldIcon /> };

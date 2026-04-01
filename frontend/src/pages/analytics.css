@@ -1,0 +1,117 @@
+.analytics-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #0a0a0b;
+}
+
+.analytics-main {
+  margin-left: 240px;
+  flex: 1;
+  padding: 2rem;
+  min-width: 0;
+}
+
+.analytics-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+  gap: 1rem;
+}
+
+.analytics-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.analytics-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 0 0 2px;
+}
+
+.analytics-subtitle {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.analytics-error {
+  background: rgba(239,68,68,0.08);
+  border: 1px solid rgba(239,68,68,0.2);
+  border-radius: 10px;
+  padding: 0.875rem 1rem;
+  color: #f87171;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+/* 2-column row: CategoryBreakdown + SpendByFrequency */
+.analytics-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+/* 3-column row: Top subs + Payment methods + Status */
+.analytics-row-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.25rem;
+}
+
+/* Loading skeletons */
+.analytics-loading {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.analytics-skeleton {
+  height: 220px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #111113 25%, #18181b 50%, #111113 75%);
+  background-size: 200% 100%;
+  animation: an-shimmer 1.4s infinite;
+}
+@keyframes an-shimmer { to { background-position: -200% 0; } }
+
+.retry-btn {
+  background: none;
+  border: 1px solid rgba(239,68,68,0.3);
+  border-radius: 6px;
+  color: #f87171;
+  padding: 4px 10px;
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+.sidebar-toggle-btn {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+.sidebar-toggle-btn span {
+  display: block; width: 20px; height: 2px;
+  background: #94a3b8; border-radius: 2px;
+}
+
+@media (max-width: 1100px) {
+  .analytics-row-3 { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 800px) {
+  .analytics-main { margin-left: 0; padding: 1rem; }
+  .sidebar-toggle-btn { display: flex; }
+  .analytics-row-2, .analytics-row-3 { grid-template-columns: 1fr; }
+  .analytics-loading { grid-template-columns: 1fr; }
+}

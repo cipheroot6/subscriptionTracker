@@ -1,0 +1,121 @@
+.subs-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #0a0a0b;
+}
+
+.subs-main {
+  margin-left: 240px;
+  flex: 1;
+  padding: 2rem;
+  min-width: 0;
+}
+
+.subs-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+  gap: 1rem;
+}
+
+.subs-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.subs-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 0 0 2px;
+}
+
+.subs-subtitle {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.subs-add-btn {
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.subs-add-btn:hover { background: #2563eb; }
+
+.subs-error {
+  background: rgba(239,68,68,0.08);
+  border: 1px solid rgba(239,68,68,0.2);
+  border-radius: 10px;
+  padding: 0.875rem 1rem;
+  color: #f87171;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.retry-btn {
+  background: none;
+  border: 1px solid rgba(239,68,68,0.3);
+  border-radius: 6px;
+  color: #f87171;
+  padding: 4px 10px;
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+.subs-results-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.subs-count {
+  font-size: 0.8125rem;
+  color: #475569;
+}
+
+.subs-clear {
+  background: none;
+  border: none;
+  color: #3b82f6;
+  font-size: 0.8125rem;
+  cursor: pointer;
+  padding: 0;
+}
+.subs-clear:hover { text-decoration: underline; }
+
+/* Reuse sidebar toggle styles from dashboard */
+.sidebar-toggle-btn {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+.sidebar-toggle-btn span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: #94a3b8;
+  border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+  .subs-main { margin-left: 0; padding: 1rem; }
+  .sidebar-toggle-btn { display: flex; }
+}

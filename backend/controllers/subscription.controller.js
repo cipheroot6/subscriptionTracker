@@ -85,6 +85,51 @@ export const getUserSubscriptions = async (req, res, next) => {
   }
 };
 
+export const updateSubscription = async (req, res, next) => {
+  try {
+    const subscription = await Subscription.findById(req.params.id);
+    if (!subscription) {
+      const error = new Error("Subscription not found");
+      error.status = 404;
+      throw error;
+    }
+    if (subscription.user.toString() !== req.user.id && req.user.role !== "admin") {
+      const error = new Error("Not authorized");
+      error.status = 403;
+      throw error;
+    }
+    const updated = await Subscription.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+    res.status(200).json({ success: true, data: updated });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const cancelSubscription = async (req, res, next) => {
+  try {
+    const subscription = await Subscription.findById(req.params.id);
+    if (!subscription) {
+      const error = new Error("Subscription not found");
+      error.status = 404;
+      throw error;
+    }
+    if (subscription.user.toString() !== req.user.id && req.user.role !== "admin") {
+      const error = new Error("Not authorized");
+      error.status = 403;
+      throw error;
+    }
+    subscription.status = "canceled";
+    await subscription.save();
+    res.status(200).json({ success: true, data: subscription });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const getAllSubscriptions = async (req, res, next) => {
   try {
     const allSubscriptions = await Subscription.find();

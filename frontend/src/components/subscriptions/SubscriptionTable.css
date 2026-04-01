@@ -1,0 +1,77 @@
+.st-wrap {
+  background: #111113;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  overflow: auto;
+}
+
+.st-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.st-table thead tr {
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.st-table th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #475569;
+}
+
+.st-table tbody tr {
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.12s;
+}
+.st-table tbody tr:last-child { border-bottom: none; }
+.st-table tbody tr:hover { background: rgba(255,255,255,0.025); }
+
+.st-table td { padding: 0.75rem 1rem; vertical-align: middle; color: #cbd5e1; }
+
+.st-name-cell { display: flex; align-items: center; gap: 10px; }
+.st-icon {
+  width: 32px; height: 32px; border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8125rem; font-weight: 600; flex-shrink: 0;
+}
+.st-name { font-weight: 500; color: #e2e8f0; }
+.st-cat { color: #64748b; font-size: 0.8125rem; }
+.st-price { font-weight: 500; color: #e2e8f0; }
+.st-freq { color: #64748b; font-size: 0.75rem; margin-left: 2px; }
+.st-date { color: #94a3b8; font-size: 0.8125rem; }
+.st-payment { color: #64748b; font-size: 0.8125rem; }
+
+.st-badge { font-size: 0.6875rem; font-weight: 500; padding: 2px 8px; border-radius: 99px; }
+.st-badge-active   { background: rgba(16,185,129,0.12); color: #10b981; }
+.st-badge-expired  { background: rgba(239,68,68,0.12);  color: #ef4444; }
+.st-badge-canceled { background: rgba(100,116,139,0.15); color: #94a3b8; }
+.st-badge-pending  { background: rgba(245,158,11,0.12); color: #f59e0b; }
+
+.st-actions { display: flex; gap: 4px; align-items: center; }
+.st-btn {
+  padding: 4px 10px; border-radius: 6px; font-size: 0.75rem;
+  border: 1px solid transparent; cursor: pointer; transition: all 0.15s;
+}
+.st-btn-edit   { border-color: rgba(255,255,255,0.1); background: transparent; color: #94a3b8; }
+.st-btn-edit:hover { border-color: rgba(59,130,246,0.4); color: #3b82f6; }
+.st-btn-cancel { border-color: rgba(245,158,11,0.2); background: transparent; color: #f59e0b; }
+.st-btn-cancel:hover { background: rgba(245,158,11,0.1); }
+.st-btn-delete { border-color: rgba(239,68,68,0.2); background: transparent; color: #ef4444; }
+.st-btn-delete:hover { background: rgba(239,68,68,0.1); }
+
+.st-skeletons { display: flex; flex-direction: column; gap: 8px; padding: 1rem; }
+.st-skeleton {
+  height: 52px; border-radius: 8px;
+  background: linear-gradient(90deg, #1a1a1e 25%, #222226 50%, #1a1a1e 75%);
+  background-size: 200% 100%;
+  animation: st-shimmer 1.4s infinite;
+}
+@keyframes st-shimmer { to { background-position: -200% 0; } }
+
+.st-empty { text-align: center; padding: 3rem; color: #475569; font-size: 0.875rem; }

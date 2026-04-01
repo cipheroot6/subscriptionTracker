@@ -4,8 +4,12 @@ import SignUp from './pages/signUp'
 import SignIn from './pages/signin'
 import ForgetPassword from './pages/forgotPassword'
 import Dashboard from './pages/dashboard'
-import NotFound from './pages/notFound'
+import Settings from './pages/settings'
+import Admin from './pages/admin'
+import Subscriptions from './pages/subscriptions'
+import Analytics from './pages/analytics'
 import ProtectedRoute from './components/protectedRoutes'
+import AdminRoute from './components/AdminRoute'
 
 function App() {
   return (
@@ -14,11 +18,20 @@ function App() {
       <Route path="/sign-in" element={<SignIn />} />
       <Route path="/forgot-password" element={<ForgetPassword />} />
       <Route path="/" element={
-        <ProtectedRoute>
-          <Dashboard />
-        </ProtectedRoute>
+        <ProtectedRoute><Dashboard /></ProtectedRoute>
       } />
-      <Route path="*" element={<NotFound />} />
+      <Route path="/subscriptions" element={
+        <ProtectedRoute><Subscriptions /></ProtectedRoute>
+      } />
+      <Route path="/analytics" element={
+        <ProtectedRoute><Analytics /></ProtectedRoute>
+      } />
+      <Route path="/settings" element={
+        <ProtectedRoute><Settings /></ProtectedRoute>
+      } />
+      <Route path="/admin" element={
+        <AdminRoute><Admin /></AdminRoute>
+      } />
     </Routes>
   )
 }
