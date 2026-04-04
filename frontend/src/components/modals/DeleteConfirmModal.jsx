@@ -21,7 +21,7 @@ export default function DeleteConfirmModal({ subscription, onClose, onSuccess })
       await api.delete(`/subscription/${subscription._id}`);
       onSuccess();
     } catch (err) {
-      setError(err.response?.data?.message || 'Something went wrong.');
+      setError(err.response?.data?.error || 'Failed to delete subscription. Please try again.');
       setLoading(false);
     }
   };

@@ -41,7 +41,7 @@ export default function Subscriptions() {
       const res = await api.get(`/subscription/user/${user._id}`);
       setSubscriptions(res.data.data || []);
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to load subscriptions.');
+      setError(err.response?.data?.error || 'Failed to load subscriptions.');
     } finally { setLoading(false); }
   }, [user?._id]);
 

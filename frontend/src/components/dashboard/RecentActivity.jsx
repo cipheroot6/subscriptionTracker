@@ -29,12 +29,12 @@ const ArrowRightIcon = () => (
   </svg>
 );
 
-export default function RecentActivity({ subscriptions, loading, onAdd }) {
+export default function RecentActivity({ subscriptions, loading }) {
   const navigate = useNavigate();
 
   const recent = [...subscriptions]
     .sort((a, b) => new Date(b.createdAt || b.startDate) - new Date(a.createdAt || a.startDate))
-    .slice(0, 4);
+    .slice(0, 3);
 
   return (
     <div className="ra-card">
@@ -55,7 +55,6 @@ export default function RecentActivity({ subscriptions, loading, onAdd }) {
       ) : recent.length === 0 ? (
         <div className="ra-empty">
           <p>No subscriptions yet.</p>
-          <button className="ra-add-btn" onClick={onAdd}>+ Add your first one</button>
         </div>
       ) : (
         <div className="ra-list">
@@ -77,10 +76,6 @@ export default function RecentActivity({ subscriptions, loading, onAdd }) {
             );
           })}
         </div>
-      )}
-
-      {!loading && subscriptions.length > 0 && (
-        <button className="ra-add-inline" onClick={onAdd}>+ Add Subscription</button>
       )}
     </div>
   );

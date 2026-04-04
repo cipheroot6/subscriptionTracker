@@ -71,10 +71,7 @@ export default function Admin() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [tab, setTab] = useState('users'); // 'users' | 'subscriptions'
-  const [roleUpdating, setRoleUpdating] = useState(null);
-  const [userSearch, setUserSearch] = useState('');
-  const [subSearch, setSubSearch] = useState('');
-  const [subStatusFilter, setSubStatusFilter] = useState('all');
+
 
   const fetchAll = useCallback(async () => {
     setLoading(true);
@@ -95,6 +92,13 @@ export default function Admin() {
 
   useEffect(() => { fetchAll(); }, [fetchAll]);
 
+  const [roleUpdating, setRoleUpdating] = useState(null);
+  const [deletingUser, setDeletingUser] = useState(null);
+  const [deletingSub, setDeletingSub] = useState(null);
+  const [userSearch, setUserSearch] = useState('');
+  const [subSearch, setSubSearch] = useState('');
+  const [subStatusFilter, setSubStatusFilter] = useState('all');
+
   const handleRoleToggle = async (userId, currentRole) => {
     const newRole = currentRole === 'admin' ? 'user' : 'admin';
     setRoleUpdating(userId);
@@ -105,6 +109,33 @@ export default function Admin() {
       alert(err.response?.data?.error || 'Failed to update role.');
     } finally {
       setRoleUpdating(null);
+    }
+  };
+
+  const handleDeleteUser = async (userId) => {
+    if (!window.confirm('Permanently delete this user and all their subscriptions?')) return;
+    setDeletingUser(userId);
+    try {
+      await api.delete(`/users/${userId}`);
+      setUsers(prev => prev.filter(u => u._id !== userId));
+      setSubs(prev => prev.filter(s => s.user !== userId && s.user?._id !== userId));
+    } catch (err) {
+      alert(err.response?.data?.error || 'Failed to delete user.');
+    } finally {
+      setDeletingUser(null);
+    }
+  };
+
+  const handleDeleteSubscription = async (subId) => {
+    if (!window.confirm('Permanently delete this subscription?')) return;
+    setDeletingSub(subId);
+    try {
+      await api.delete(`/subscription/${subId}`);
+      setSubs(prev => prev.filter(s => s._id !== subId));
+    } catch (err) {
+      alert(err.response?.data?.error || 'Failed to delete subscription.');
+    } finally {
+      setDeletingSub(null);
     }
   };
 
@@ -158,7 +189,7 @@ export default function Admin() {
         <div className="admin-stats">
           <StatCard icon={<UsersIcon />} label="Total Users" value={loading ? '—' : users.length} sub={`${adminCount} admin${adminCount !== 1 ? 's' : ''}`} accent="#818cf8" />
           <StatCard icon={<ReceiptIcon />} label="Total Subscriptions" value={loading ? '—' : subs.length} sub={`${activeSubs.length} active`} accent="#34d399" />
-          <StatCard icon={<TrendIcon />} label="Monthly Revenue" value={loading ? '—' : `$${totalRevenue.toFixed(2)}`} sub="from active subs" accent="#f59e0b" />
+          <StatCard icon={<TrendIcon />} label="Total Monthly Spend" value={loading ? '—' : `$${totalRevenue.toFixed(2)}`} sub="across all active subs" accent="#f59e0b" />
         </div>
 
         {/* Tabs */}
@@ -190,18 +221,19 @@ export default function Admin() {
                     <th>Role</th>
                     <th>Subscriptions</th>
                     <th>Joined</th>
-                    <th>Actions</th>
+                    <th>Role Action</th>
+                    <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody>
                   {loading ? (
                     Array.from({ length: 4 }).map((_, i) => (
                       <tr key={i} className="admin-row-skeleton">
-                        <td colSpan={5}><div className="skeleton" /></td>
+                        <td colSpan={6}><div className="skeleton" /></td>
                       </tr>
                     ))
                   ) : filteredUsers.length === 0 ? (
-                    <tr><td colSpan={5} className="admin-empty">No users found.</td></tr>
+                    <tr><td colSpan={6} className="admin-empty">No users found.</td></tr>
                   ) : filteredUsers.map(u => (
                     <tr key={u._id}>
                       <td>
@@ -229,6 +261,15 @@ export default function Admin() {
                           disabled={roleUpdating === u._id}
                         >
                           {roleUpdating === u._id ? '…' : u.role === 'admin' ? 'Remove Admin' : 'Make Admin'}
+                        </button>
+                      </td>
+                      <td>
+                        <button
+                          className="admin-delete-btn"
+                          onClick={() => handleDeleteUser(u._id)}
+                          disabled={deletingUser === u._id}
+                        >
+                          {deletingUser === u._id ? '…' : 'Delete'}
                         </button>
                       </td>
                     </tr>
@@ -267,6 +308,7 @@ export default function Admin() {
                     <th>Category</th>
                     <th>Status</th>
                     <th>Renewal</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -277,19 +319,25 @@ export default function Admin() {
                       </tr>
                     ))
                   ) : filteredSubs.length === 0 ? (
-                    <tr><td colSpan={6} className="admin-empty">No subscriptions found.</td></tr>
+                    <tr><td colSpan={7} className="admin-empty">No subscriptions found.</td></tr>
                   ) : filteredSubs.map(s => (
                     <tr key={s._id}>
-                      <td>
-                        <span className="admin-service-name">{s.name}</span>
-                      </td>
+                      <td><span className="admin-service-name">{s.name}</span></td>
                       <td className="admin-price">{currency(s.price, s.currency)}</td>
                       <td className="admin-freq">{s.frequency}</td>
                       <td className="admin-cat">{s.category}</td>
-                      <td>
-                        <span className={`badge ${STATUS_CLASS[s.status] || ''}`}>{s.status}</span>
-                      </td>
+                      <td><span className={`badge ${STATUS_CLASS[s.status] || ''}`}>{s.status}</span></td>
                       <td className="admin-date">{fmt(s.renewalDate)}</td>
+                      <td>
+                        <button
+                          className="admin-delete-btn"
+                          onClick={() => handleDeleteSubscription(s._id)}
+                          disabled={deletingSub === s._id}
+                          title="Delete subscription"
+                        >
+                          {deletingSub === s._id ? '…' : 'Delete'}
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>

@@ -24,7 +24,7 @@ export default function Analytics() {
       const res = await api.get(`/subscription/user/${user._id}`);
       setSubscriptions(res.data.data || []);
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to load data.');
+      setError(err.response?.data?.error || 'Failed to load your data.');
     } finally { setLoading(false); }
   }, [user?._id]);
 

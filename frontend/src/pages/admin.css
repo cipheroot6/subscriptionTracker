@@ -441,3 +441,23 @@
 @media (max-width: 960px) {
   .admin-stats { grid-template-columns: 1fr 1fr; }
 }
+
+.admin-delete-btn {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  border: 1px solid rgba(239,68,68,0.25);
+  background: transparent;
+  color: #ef4444;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.admin-delete-btn:hover:not(:disabled) {
+  background: rgba(239,68,68,0.1);
+  border-color: rgba(239,68,68,0.4);
+}
+.admin-delete-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

@@ -9,6 +9,7 @@ import Admin from './pages/admin'
 import Subscriptions from './pages/subscriptions'
 import Analytics from './pages/analytics'
 import ProtectedRoute from './components/protectedRoutes'
+import UserRoute from './components/UserRoute'
 import AdminRoute from './components/AdminRoute'
 
 function App() {
@@ -17,21 +18,17 @@ function App() {
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/sign-in" element={<SignIn />} />
       <Route path="/forgot-password" element={<ForgetPassword />} />
-      <Route path="/" element={
-        <ProtectedRoute><Dashboard /></ProtectedRoute>
-      } />
-      <Route path="/subscriptions" element={
-        <ProtectedRoute><Subscriptions /></ProtectedRoute>
-      } />
-      <Route path="/analytics" element={
-        <ProtectedRoute><Analytics /></ProtectedRoute>
-      } />
-      <Route path="/settings" element={
-        <ProtectedRoute><Settings /></ProtectedRoute>
-      } />
-      <Route path="/admin" element={
-        <AdminRoute><Admin /></AdminRoute>
-      } />
+
+      {/* Regular user pages — admins are blocked and redirected to /admin */}
+      <Route path="/" element={<UserRoute><Dashboard /></UserRoute>} />
+      <Route path="/subscriptions" element={<UserRoute><Subscriptions /></UserRoute>} />
+      <Route path="/analytics" element={<UserRoute><Analytics /></UserRoute>} />
+
+      {/* Settings is accessible to both roles */}
+      <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+
+      {/* Admin only */}
+      <Route path="/admin" element={<AdminRoute><Admin /></AdminRoute>} />
     </Routes>
   )
 }

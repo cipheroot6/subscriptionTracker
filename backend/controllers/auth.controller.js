@@ -16,7 +16,7 @@ export const signUp = async (req, res, next) => {
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-      const error = new Error("User already exists");
+      const error = new Error("An account with this email already exists.");
       error.status = 409;
       throw error;
     }
@@ -62,7 +62,7 @@ export const signIn = async (req, res, next) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      const error = new Error("User not found");
+      const error = new Error("No account found with that email address.");
       error.status = 404;
       throw error;
     }
@@ -70,7 +70,7 @@ export const signIn = async (req, res, next) => {
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
     if (!isPasswordCorrect) {
-      const error = new Error("Incorrect password");
+      const error = new Error("Wrong password. Please try again.");
       error.status = 401;
       throw error;
     }

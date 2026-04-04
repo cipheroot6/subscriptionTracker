@@ -56,19 +56,6 @@
   font-size: 0.875rem;
 }
 
-.ra-add-btn {
-  margin-top: 0.75rem;
-  background: #3b82f6;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 0.5rem 1.25rem;
-  font-size: 0.875rem;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-.ra-add-btn:hover { background: #2563eb; }
-
 .ra-list { display: flex; flex-direction: column; gap: 2px; }
 
 .ra-row {
@@ -127,16 +114,3 @@
 .ra-badge-canceled { background: rgba(100,116,139,0.15); color: #94a3b8; }
 .ra-badge-pending  { background: rgba(245,158,11,0.12); color: #f59e0b; }
 
-.ra-add-inline {
-  width: 100%;
-  margin-top: 1rem;
-  padding: 0.625rem;
-  background: rgba(59,130,246,0.08);
-  border: 1px dashed rgba(59,130,246,0.3);
-  border-radius: 8px;
-  color: #3b82f6;
-  font-size: 0.875rem;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-.ra-add-inline:hover { background: rgba(59,130,246,0.14); }

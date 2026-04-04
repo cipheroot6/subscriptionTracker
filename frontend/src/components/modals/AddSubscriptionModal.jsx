@@ -70,7 +70,7 @@ export default function AddSubscriptionModal({ onClose, onSuccess }) {
       });
       onSuccess();
     } catch (err) {
-      setError(err.response?.data?.message || 'Something went wrong. Please try again.');
+      setError(err.response?.data?.error || 'Failed to add subscription. Please try again.');
     } finally {
       setLoading(false);
     }

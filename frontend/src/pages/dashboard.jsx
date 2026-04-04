@@ -25,7 +25,7 @@ export default function Dashboard() {
       const res = await api.get(`/subscription/user/${user._id}`);
       setSubscriptions(res.data.data || []);
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to load subscriptions.');
+      setError(err.response?.data?.error || 'Failed to load subscriptions.');
     } finally {
       setLoading(false);
     }
@@ -70,7 +70,6 @@ export default function Dashboard() {
           <RecentActivity
             subscriptions={subscriptions}
             loading={loading}
-            onAdd={() => setShowAddModal(true)}
           />
         </div>
       </main>

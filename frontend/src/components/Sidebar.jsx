@@ -51,7 +51,11 @@ const baseNavItems = [
   { to: '/analytics', label: 'Analytics', icon: <BarChartIcon /> },
   { to: '/settings', label: 'Settings', icon: <SettingsIcon /> },
 ];
-const adminNavItem = { to: '/admin', label: 'Admin', icon: <ShieldIcon /> };
+
+const adminNavItems = [
+  { to: '/admin', label: 'Admin', icon: <ShieldIcon /> },
+  { to: '/settings', label: 'Settings', icon: <SettingsIcon /> },
+];
 
 function getInitials(name = '') {
   return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2) || '?';
@@ -59,7 +63,7 @@ function getInitials(name = '') {
 
 export default function Sidebar({ isOpen, onClose }) {
   const { user, logout } = useAuth();
-  const navItems = user?.role === 'admin' ? [...baseNavItems, adminNavItem] : baseNavItems;
+  const navItems = user?.role === 'admin' ? adminNavItems : baseNavItems;
 
   return (
     <>

@@ -70,7 +70,7 @@ export default function EditSubscriptionModal({ subscription, onClose, onSuccess
       });
       onSuccess();
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to update subscription.');
+      setError(err.response?.data?.error || 'Failed to save changes. Please try again.');
     } finally {
       setLoading(false);
     }

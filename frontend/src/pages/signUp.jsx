@@ -126,7 +126,8 @@ export default function SignUp() {
       window.location.href = "/";
     } catch (err) {
       setError(
-        err.response?.data?.message ||
+        err.response?.data?.error ||
+          err.response?.data?.message ||
           "Something went wrong. Please try again.",
       );
     } finally {
