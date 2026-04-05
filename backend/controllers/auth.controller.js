@@ -9,8 +9,14 @@ export const signUp = async (req, res, next) => {
   session.startTransaction();
 
   try {
-    console.log("req.body:", req.body);
-    const { name, email, password, role } = req.body;
+    const { name, email, password } = req.body;
+    const role = "user";
+
+    if (role != "user") {
+      const error = new Error("Invalid role");
+      error.status = 400;
+      throw error;
+    }
 
     // check if user already exists
     const existingUser = await User.findOne({ email });
@@ -39,13 +45,16 @@ export const signUp = async (req, res, next) => {
     await session.commitTransaction();
     session.endSession();
 
+    const user = { ...newUser[0] };
+    delete user.password;
+
     res.status(201).json({
       success: true,
       message: "User created successfully",
       data: {
         token,
-        user: newUser[0],
-        role: newUser[0].role,
+        user: user,
+        role: user.role,
       },
     });
   } catch (error) {

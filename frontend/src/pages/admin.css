@@ -430,16 +430,72 @@
 
 .sidebar-toggle-btn:hover { background-color: #18181b; border-color: #3f3f46; }
 
-/* ── Mobile ──────────────────────────────────────────────── */
-@media (max-width: 768px) {
-  .admin-main { margin-left: 0; padding: 1.25rem; }
-  .sidebar-toggle-btn { display: flex; }
-  .admin-stats { grid-template-columns: 1fr; }
-  .admin-table-toolbar { flex-wrap: wrap; }
-}
-
+/* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 960px) {
   .admin-stats { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 768px) {
+  .admin-main { margin-left: 0; padding: 1rem; }
+  .sidebar-toggle-btn { display: flex; }
+
+  /* Header */
+  .admin-header { margin-bottom: 1rem; align-items: center; }
+  .admin-header-left { flex: 1; min-width: 0; align-items: flex-start; }
+  .admin-title { font-size: 1.125rem; }
+  .admin-title-row { gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.25rem; }
+  .admin-badge { font-size: 0.6rem; padding: 0.15rem 0.45rem; }
+  .admin-subtitle { font-size: 0.75rem; }
+
+  /* Refresh — icon only */
+  .admin-refresh-btn span { display: none; }
+  .admin-refresh-btn { width: 34px; height: 34px; padding: 0; justify-content: center; flex-shrink: 0; }
+
+  /* Stats — always 2 columns, compact cards */
+  .admin-stats { grid-template-columns: 1fr 1fr; gap: 0.625rem; margin-bottom: 1rem; }
+  .admin-stat-card { padding: 0.875rem; gap: 0.6rem; flex-direction: row; align-items: center; }
+  .admin-stat-icon { width: 30px; height: 30px; flex-shrink: 0; }
+  .admin-stat-icon svg { width: 14px; height: 14px; }
+  .admin-stat-label { font-size: 0.6875rem; margin-bottom: 0.125rem; }
+  .admin-stat-value { font-size: 1.125rem; margin-bottom: 0.1rem; }
+  .admin-stat-sub { font-size: 0.6875rem; }
+
+  /* Third card full width, stay horizontal */
+  .admin-stats .admin-stat-card:nth-child(3) { grid-column: 1 / -1; }
+
+  /* Tabs */
+  .admin-tabs { gap: 0; margin-bottom: 1rem; }
+  .admin-tab { padding: 0.5rem 0.75rem; font-size: 0.8125rem; }
+
+  /* Toolbar */
+  .admin-table-toolbar { flex-wrap: wrap; gap: 0.5rem; padding: 0.75rem; }
+  .admin-select { flex: 1; min-width: 120px; }
+
+  /* Table base */
+  .admin-table th { padding: 0.625rem 0.625rem; font-size: 0.625rem; letter-spacing: 0.03em; }
+  .admin-table td { padding: 0.75rem 0.625rem; font-size: 0.8125rem; }
+
+  /* Users table: hide Subscriptions (col 3) and Joined (col 4) */
+  .admin-table:not(.admin-subs-table) th:nth-child(3),
+  .admin-table:not(.admin-subs-table) td:nth-child(3),
+  .admin-table:not(.admin-subs-table) th:nth-child(4),
+  .admin-table:not(.admin-subs-table) td:nth-child(4) { display: none; }
+
+  /* Subs table: hide Frequency (col 3) and Category (col 4) */
+  .admin-subs-table th:nth-child(3),
+  .admin-subs-table td:nth-child(3),
+  .admin-subs-table th:nth-child(4),
+  .admin-subs-table td:nth-child(4) { display: none; }
+
+  /* Compact user cell */
+  .admin-user-cell { gap: 0.5rem; }
+  .admin-user-avatar { width: 28px; height: 28px; font-size: 0.625rem; border-radius: 6px; }
+  .admin-user-name { font-size: 0.8125rem; }
+  .admin-user-email { font-size: 0.6875rem; }
+
+  /* Compact action buttons */
+  .admin-role-btn { padding: 0.25rem 0.5rem; font-size: 0.6875rem; white-space: nowrap; }
+  .admin-delete-btn { padding: 0.25rem 0.5rem; font-size: 0.6875rem; }
 }
 
 .admin-delete-btn {

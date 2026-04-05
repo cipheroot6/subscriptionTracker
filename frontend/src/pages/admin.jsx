@@ -179,7 +179,7 @@ export default function Admin() {
             </div>
           </div>
           <button className="admin-refresh-btn" onClick={fetchAll} disabled={loading}>
-            <RefreshIcon /> Refresh
+            <RefreshIcon /> <span>Refresh</span>
           </button>
         </div>
 
@@ -221,7 +221,7 @@ export default function Admin() {
                     <th>Role</th>
                     <th>Subscriptions</th>
                     <th>Joined</th>
-                    <th>Role Action</th>
+                    <th>Action</th>
                     <th>Delete</th>
                   </tr>
                 </thead>
@@ -299,7 +299,7 @@ export default function Admin() {
               </select>
             </div>
             <div className="admin-table-wrap">
-              <table className="admin-table">
+              <table className="admin-table admin-subs-table">
                 <thead>
                   <tr>
                     <th>Service</th>
