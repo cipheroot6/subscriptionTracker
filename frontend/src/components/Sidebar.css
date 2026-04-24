@@ -6,11 +6,14 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
+  height: 100dvh;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 100;
-  padding: 1.5rem 0;
+  padding: 1.5rem 0 0.75rem;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 /* Mobile close button — hidden on desktop */
@@ -25,6 +28,7 @@
   gap: 0.625rem;
   padding: 0 1.25rem;
   margin-bottom: 2rem;
+  flex-shrink: 0;
 }
 
 .sidebar-logo-img {
@@ -47,6 +51,8 @@
   gap: 0.125rem;
   flex: 1;
   padding: 0 0.75rem;
+  overflow-y: auto;
+  min-height: 0;
 }
 
 .sidebar-nav-item {
@@ -88,9 +94,9 @@
 
 /* Footer */
 .sidebar-footer {
-  padding: 1rem 0.75rem 0;
+  padding: 1rem 0.75rem 0.5rem;
   border-top: 1px solid #1a1a1e;
-  margin-top: auto;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -175,6 +181,10 @@
     transform: translateX(-100%);
     transition: transform 0.25s ease;
     box-shadow: none;
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100vh;
+    max-height: 100dvh;
   }
 
   /* Slide in when open */

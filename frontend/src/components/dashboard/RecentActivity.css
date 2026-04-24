@@ -13,15 +13,17 @@
 }
 
 .ra-title {
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   font-weight: 600;
-  color: #f1f5f9;
+  color: #a1a1aa;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   margin: 0 0 2px;
 }
 
 .ra-sub {
   font-size: 0.75rem;
-  color: #64748b;
+  color: #52525b;
   margin: 0;
 }
 
@@ -52,7 +54,7 @@
 .ra-empty {
   text-align: center;
   padding: 2rem 0;
-  color: #64748b;
+  color: #52525b;
   font-size: 0.875rem;
 }
 
@@ -99,7 +101,7 @@
 
 .ra-price {
   font-size: 0.75rem;
-  color: #64748b;
+  color: #52525b;
 }
 
 .ra-badge {

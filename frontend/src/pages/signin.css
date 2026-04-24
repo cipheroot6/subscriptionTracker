@@ -563,3 +563,18 @@
   width: 16px;
   height: 16px;
 }
+
+.signin-forgot-row {
+  text-align: center;
+  margin-top: 3.25rem;
+  margin-bottom: 0;
+  font-size: 0.8125rem;
+}
+ 
+.signin-forgot-row .forgot-link {
+  color: #d4d4d8;
+}
+ 
+.signin-forgot-row .forgot-link:hover {
+  color: #f4f4f5;
+}

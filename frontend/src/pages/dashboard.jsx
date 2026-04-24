@@ -38,21 +38,21 @@ export default function Dashboard() {
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       <main className="dashboard-main">
-        <div className="dashboard-header">
-          <div className="dashboard-header-left">
-            <button className="sidebar-toggle-btn" onClick={() => setSidebarOpen(true)} aria-label="Open sidebar">
-              <span /><span /><span />
-            </button>
-            <div>
+        <div className="dashboard-header-area">
+          <div className="dashboard-header">
+            <div className="dashboard-header-left">
+              <button className="sidebar-toggle-btn" onClick={() => setSidebarOpen(true)} aria-label="Open sidebar">
+                <span /><span /><span />
+              </button>
               <h1 className="dashboard-title">Dashboard</h1>
-              <p className="dashboard-welcome">
-                Welcome back{user?.name ? `, ${user.name.split(' ')[0]}` : ''}
-              </p>
             </div>
+            <button className="dashboard-add-btn" onClick={() => setShowAddModal(true)}>
+              + <span className="btn-label-full">Add Subscription</span><span className="btn-label-short">Add</span>
+            </button>
           </div>
-          <button className="dashboard-add-btn" onClick={() => setShowAddModal(true)}>
-            + Add Subscription
-          </button>
+          <p className="dashboard-welcome">
+            Welcome back{user?.name ? `, ${user.name.split(' ')[0]}` : ''}
+          </p>
         </div>
 
         {error && (
