@@ -31,16 +31,16 @@
 }
 
 .modal-title {
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #f4f4f5;
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
   letter-spacing: -0.02em;
   margin-bottom: 0.25rem;
 }
 
 .modal-subtitle {
-  font-size: 0.8125rem;
-  color: #52525b;
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
 }
 
 .modal-close {
@@ -49,7 +49,7 @@
   background: none;
   border: 1px solid #27272a;
   border-radius: 8px;
-  color: #71717a;
+  color: var(--text-muted);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -74,8 +74,8 @@
   border: 1px solid rgba(239, 68, 68, 0.2);
   border-radius: 8px;
   padding: 0.625rem 0.75rem;
-  color: #fca5a5;
-  font-size: 0.8125rem;
+  color: var(--text-error);
+  font-size: var(--font-size-xs);
   margin-bottom: 1rem;
 }
 
@@ -93,9 +93,9 @@
 }
 
 .modal-field label {
-  font-size: 0.8125rem;
-  font-weight: 500;
-  color: #a1a1aa;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
 }
 
 .modal-field input,
@@ -105,8 +105,8 @@
   background-color: #09090b;
   border: 1px solid #3f3f46;
   border-radius: 8px;
-  color: #f4f4f5;
-  font-size: 0.875rem;
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
   font-family: inherit;
   outline: none;
   transition: border-color 0.15s ease;
@@ -116,7 +116,7 @@
 
 .modal-field input::placeholder { color: #3f3f46; }
 .modal-field input:focus,
-.modal-field select:focus { border-color: #71717a; }
+.modal-field select:focus { border-color: var(--text-muted); }
 
 /* Date input */
 .modal-field input[type="date"] {
@@ -143,9 +143,9 @@
   background: transparent;
   border: 1px solid #27272a;
   border-radius: 8px;
-  color: #71717a;
-  font-size: 0.875rem;
-  font-weight: 500;
+  color: var(--text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
   cursor: pointer;
   font-family: inherit;
   transition: background-color 0.15s ease, color 0.15s ease;
@@ -153,17 +153,17 @@
 
 .modal-cancel-btn:hover {
   background-color: #18181b;
-  color: #a1a1aa;
+  color: var(--text-secondary);
 }
 
 .modal-submit-btn {
   padding: 0.625rem 1.25rem;
-  background-color: #f4f4f5;
+  background-color: var(--text-primary);
   border: none;
   border-radius: 8px;
   color: #09090b;
-  font-size: 0.875rem;
-  font-weight: 600;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
   cursor: pointer;
   font-family: inherit;
   transition: background-color 0.15s ease;

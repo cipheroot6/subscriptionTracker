@@ -31,35 +31,35 @@
   display: flex; align-items: center; justify-content: center;
 }
 
-.sc-badge { font-size: 0.6875rem; font-weight: 500; padding: 2px 8px; border-radius: 99px; }
+.sc-badge { font-size: 0.6875rem; font-weight: var(--font-weight-medium); padding: 2px 8px; border-radius: 99px; }
 .sc-badge-active   { background: rgba(16,185,129,0.12); color: #10b981; }
-.sc-badge-expired  { background: rgba(239,68,68,0.12);  color: #ef4444; }
+.sc-badge-expired  { background: rgba(239,68,68,0.12);  color: var(--text-error); }
 .sc-badge-canceled { background: rgba(100,116,139,0.15); color: #94a3b8; }
 .sc-badge-pending  { background: rgba(245,158,11,0.12); color: #f59e0b; }
 
-.sc-name { font-size: 1rem; font-weight: 600; color: #e2e8f0; margin: 0; }
-.sc-cat  { font-size: 0.75rem; color: #475569; margin: 0; }
+.sc-name { font-size: var(--font-size-base); font-weight: var(--font-weight-semibold); color: #e2e8f0; margin: 0; }
+.sc-cat  { font-size: var(--font-size-tiny); color: #475569; margin: 0; }
 
 .sc-price-row { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
-.sc-price { font-size: 0.9375rem; font-weight: 600; color: #f1f5f9; }
+.sc-price { font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: #f1f5f9; }
 
-.sc-chip { font-size: 0.6875rem; font-weight: 500; padding: 2px 8px; border-radius: 99px; }
-.sc-chip-red   { background: rgba(239,68,68,0.15);  color: #ef4444; }
+.sc-chip { font-size: 0.6875rem; font-weight: var(--font-weight-medium); padding: 2px 8px; border-radius: 99px; }
+.sc-chip-red   { background: rgba(239,68,68,0.15);  color: var(--text-error); }
 .sc-chip-amber { background: rgba(245,158,11,0.15); color: #f59e0b; }
 .sc-chip-green { background: rgba(16,185,129,0.12); color: #10b981; }
 
-.sc-payment { font-size: 0.75rem; color: #475569; margin: 0; }
+.sc-payment { font-size: var(--font-size-tiny); color: #475569; margin: 0; }
 
 .sc-actions { display: flex; gap: 6px; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05); }
 .sc-btn {
-  flex: 1; padding: 5px 0; border-radius: 7px; font-size: 0.75rem;
+  flex: 1; padding: 5px 0; border-radius: 7px; font-size: var(--font-size-tiny);
   border: 1px solid transparent; cursor: pointer; transition: all 0.15s;
 }
 .sc-btn-edit   { border-color: rgba(255,255,255,0.1); background: transparent; color: #94a3b8; }
 .sc-btn-edit:hover { border-color: rgba(59,130,246,0.4); color: #3b82f6; }
 .sc-btn-cancel { border-color: rgba(245,158,11,0.2); background: transparent; color: #f59e0b; }
 .sc-btn-cancel:hover { background: rgba(245,158,11,0.1); }
-.sc-btn-delete { border-color: rgba(239,68,68,0.2); background: transparent; color: #ef4444; }
+.sc-btn-delete { border-color: rgba(239,68,68,0.2); background: transparent; color: var(--text-error); }
 .sc-btn-delete:hover { background: rgba(239,68,68,0.1); }
 
-.sc-empty { text-align: center; padding: 3rem; color: #475569; font-size: 0.875rem; }
+.sc-empty { text-align: center; padding: 3rem; color: #475569; font-size: var(--font-size-sm); }

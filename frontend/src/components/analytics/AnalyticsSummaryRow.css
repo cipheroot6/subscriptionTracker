@@ -16,22 +16,22 @@
 }
 
 .asr-label {
-  font-size: 0.75rem;
+  font-size: var(--font-size-tiny);
   color: #64748b;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .asr-value {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-bold);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .asr-sub {
-  font-size: 0.75rem;
+  font-size: var(--font-size-tiny);
   color: #475569;
 }
 

@@ -9,7 +9,7 @@ import SubscriptionCards from '../components/subscriptions/SubscriptionCards';
 import AddSubscriptionModal from '../components/modals/AddSubscriptionModal';
 import './subscriptions.css';
 
-const DEFAULT_FILTERS = { search: '', status: 'all', category: 'all', sort: 'renewalDate', view: 'table' };
+const DEFAULT_FILTERS = { search: '', status: 'all', category: 'all', sort: 'renewalDate', view: window.innerWidth < 768 ? 'cards' : 'table' };
 
 function applyFilters(subs, { search, status, category, sort }) {
   return subs
@@ -65,7 +65,7 @@ export default function Subscriptions() {
             </div>
           </div>
           <button className="subs-add-btn" onClick={() => setShowAddModal(true)}>
-            + Add Subscription
+            + <span className="btn-label-full">Add Subscription</span><span className="btn-label-short">Add</span>
           </button>
         </div>
 

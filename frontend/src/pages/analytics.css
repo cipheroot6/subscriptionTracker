@@ -26,14 +26,14 @@
 }
 
 .analytics-title {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-bold);
   color: #f1f5f9;
-  margin: 0 0 2px;
+  margin: 0 0 0.5rem;
 }
 
 .analytics-subtitle {
-  font-size: 0.875rem;
+  font-size: var(--font-size-sm);
   color: #64748b;
   margin: 0;
 }
@@ -44,7 +44,7 @@
   border-radius: 10px;
   padding: 0.875rem 1rem;
   color: #f87171;
-  font-size: 0.875rem;
+  font-size: var(--font-size-sm);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -88,7 +88,7 @@
   border-radius: 6px;
   color: #f87171;
   padding: 4px 10px;
-  font-size: 0.8125rem;
+  font-size: var(--font-size-xs);
   cursor: pointer;
 }
 

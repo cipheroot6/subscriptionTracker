@@ -13,17 +13,17 @@
 }
 
 .ra-title {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: #a1a1aa;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  margin: 0 0 2px;
+  margin: 0 0 0.25rem;
 }
 
 .ra-sub {
-  font-size: 0.75rem;
-  color: #52525b;
+  font-size: var(--font-size-tiny);
+  color: var(--text-muted);
   margin: 0;
 }
 
@@ -34,7 +34,7 @@
   background: none;
   border: none;
   color: #3b82f6;
-  font-size: 0.8125rem;
+  font-size: var(--font-size-xs);
   cursor: pointer;
   padding: 0;
   transition: opacity 0.15s;
@@ -54,8 +54,8 @@
 .ra-empty {
   text-align: center;
   padding: 2rem 0;
-  color: #52525b;
-  font-size: 0.875rem;
+  color: var(--text-muted);
+  font-size: var(--font-size-sm);
 }
 
 .ra-list { display: flex; flex-direction: column; gap: 2px; }
@@ -77,8 +77,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.875rem;
-  font-weight: 600;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
   flex-shrink: 0;
 }
 
@@ -91,8 +91,8 @@
 }
 
 .ra-name {
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
   color: #e2e8f0;
   white-space: nowrap;
   overflow: hidden;
@@ -100,19 +100,19 @@
 }
 
 .ra-price {
-  font-size: 0.75rem;
-  color: #52525b;
+  font-size: var(--font-size-tiny);
+  color: var(--text-muted);
 }
 
 .ra-badge {
   font-size: 0.6875rem;
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   padding: 2px 8px;
   border-radius: 99px;
   white-space: nowrap;
 }
 .ra-badge-active   { background: rgba(16,185,129,0.12); color: #10b981; }
-.ra-badge-expired  { background: rgba(239,68,68,0.12);  color: #ef4444; }
+.ra-badge-expired  { background: rgba(239,68,68,0.12);  color: var(--text-error); }
 .ra-badge-canceled { background: rgba(100,116,139,0.15); color: #94a3b8; }
 .ra-badge-pending  { background: rgba(245,158,11,0.12); color: #f59e0b; }
 

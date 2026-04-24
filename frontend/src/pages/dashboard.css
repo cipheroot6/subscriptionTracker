@@ -32,27 +32,29 @@
 }
 
 .dashboard-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #f4f4f5;
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
   letter-spacing: -0.03em;
   line-height: 1;
+  margin: 0;
 }
 
 .dashboard-welcome {
-  font-size: 0.875rem;
-  color: #52525b;
-  margin-top: 0.125rem;
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  margin: 0;
+  margin-top: 0.5rem;
 }
 
 .dashboard-add-btn {
   padding: 0.625rem 1.25rem;
-  background-color: #f4f4f5;
+  background-color: var(--text-primary);
   border: none;
   border-radius: 8px;
   color: #09090b;
-  font-size: 0.875rem;
-  font-weight: 600;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
   cursor: pointer;
   font-family: inherit;
   transition: background-color 0.15s ease;
@@ -72,8 +74,8 @@
   border: 1px solid rgba(239, 68, 68, 0.2);
   border-radius: 10px;
   padding: 0.75rem 1rem;
-  color: #fca5a5;
-  font-size: 0.875rem;
+  color: var(--text-error);
+  font-size: var(--font-size-sm);
   margin-bottom: 1.5rem;
   display: flex;
   align-items: center;
@@ -86,8 +88,8 @@
   border: 1px solid rgba(239, 68, 68, 0.3);
   border-radius: 6px;
   padding: 0.25rem 0.625rem;
-  color: #fca5a5;
-  font-size: 0.8125rem;
+  color: var(--text-error);
+  font-size: var(--font-size-xs);
   cursor: pointer;
   font-family: inherit;
   transition: background-color 0.15s ease;
@@ -129,7 +131,7 @@
   display: block;
   width: 16px;
   height: 2px;
-  background-color: #a1a1aa;
+  background-color: var(--text-secondary);
   border-radius: 2px;
   transition: background-color 0.15s ease;
 }
@@ -140,7 +142,7 @@
 }
 
 .sidebar-toggle-btn:hover span {
-  background-color: #f4f4f5;
+  background-color: var(--text-primary);
 }
 
 /* ── Mobile ─────────────────────────────────────────────── */
@@ -175,13 +177,13 @@
   }
 
   .dashboard-title {
-    font-size: 1.375rem;
+    font-size: var(--font-size-h1-mobile);
     line-height: 36px; /* match hamburger button height */
   }
 
   .dashboard-add-btn {
     padding: 0.5rem 1rem;
-    font-size: 0.8125rem;
+    font-size: var(--font-size-xs);
   }
 
   .dashboard-add-btn .btn-label-full  { display: none; }

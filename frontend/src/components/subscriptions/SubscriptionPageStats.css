@@ -13,15 +13,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem 0.75rem;
+  padding: 1.25rem 1rem;
   border-right: 1px solid rgba(255,255,255,0.06);
   gap: 3px;
 }
 .sps-item:last-child { border-right: none; }
 
 .sps-value {
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-bold);
 }
 
 .sps-label {
@@ -33,5 +33,17 @@
 
 @media (max-width: 600px) {
   .sps-row { flex-wrap: wrap; }
-  .sps-item { flex: 1 1 50%; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sps-item { 
+    flex: 0 0 50%; 
+    box-sizing: border-box;
+    border-bottom: 1px solid rgba(255,255,255,0.06); 
+  }
+  .sps-item:nth-child(even) {
+    border-right: none;
+  }
+  .sps-item:last-child { 
+    flex: 0 0 100%;
+    border-bottom: none;
+    border-right: none;
+  }
 }

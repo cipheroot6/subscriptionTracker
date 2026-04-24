@@ -14,27 +14,27 @@
 }
 
 .sub-list-title {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: #a1a1aa;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   margin-bottom: 0.125rem;
 }
 
 .sub-list-count {
-  font-size: 0.75rem;
+  font-size: var(--font-size-tiny);
   color: #3f3f46;
 }
 
 .add-sub-btn {
   padding: 0.5rem 1rem;
-  background-color: #f4f4f5;
+  background-color: var(--text-primary);
   border: none;
   border-radius: 8px;
   color: #09090b;
-  font-size: 0.8125rem;
-  font-weight: 600;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
   cursor: pointer;
   font-family: inherit;
   transition: background-color 0.15s ease;
@@ -64,8 +64,8 @@
   background-color: #09090b;
   border: 1px solid #27272a;
   border-radius: 8px;
-  color: #a1a1aa;
-  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  font-size: var(--font-size-xs);
   font-family: inherit;
   cursor: pointer;
   outline: none;
@@ -94,7 +94,7 @@
 .sub-list-empty {
   text-align: center;
   color: #3f3f46;
-  font-size: 0.875rem;
+  font-size: var(--font-size-sm);
   padding: 3rem 0;
 }
 
@@ -122,8 +122,8 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  font-size: 0.9375rem;
-  font-weight: 700;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
 }
 
 .sub-info {
@@ -135,8 +135,8 @@
 }
 
 .sub-name {
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
   color: #d4d4d8;
   white-space: nowrap;
   overflow: hidden;
@@ -144,8 +144,8 @@
 }
 
 .sub-category {
-  font-size: 0.75rem;
-  color: #52525b;
+  font-size: var(--font-size-tiny);
+  color: var(--text-muted);
 }
 
 .sub-price-col {
@@ -156,13 +156,13 @@
 }
 
 .sub-price {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: #a1a1aa;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
 }
 
 .sub-freq {
-  font-size: 0.75rem;
+  font-size: var(--font-size-tiny);
   color: #3f3f46;
 }
 
@@ -181,14 +181,14 @@
 }
 
 .sub-renewal-date {
-  font-size: 0.8125rem;
-  color: #71717a;
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
 }
 
 /* Badges */
 .sub-badge {
   font-size: 0.6875rem;
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   padding: 0.2rem 0.5rem;
   border-radius: 20px;
   white-space: nowrap;
@@ -196,8 +196,8 @@
 }
 
 .badge-active   { color: #6ee7b7; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); }
-.badge-expired  { color: #fca5a5; background: rgba(239, 68, 68, 0.1);  border: 1px solid rgba(239, 68, 68, 0.2); }
-.badge-canceled { color: #a1a1aa; background: rgba(113, 113, 122, 0.1); border: 1px solid rgba(113, 113, 122, 0.2); }
+.badge-expired  { color: var(--text-error); background: rgba(239, 68, 68, 0.1);  border: 1px solid rgba(239, 68, 68, 0.2); }
+.badge-canceled { color: var(--text-secondary); background: rgba(113, 113, 122, 0.1); border: 1px solid rgba(113, 113, 122, 0.2); }
 .badge-pending  { color: #fcd34d; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.2); }
 
 /* Actions */
@@ -210,8 +210,8 @@
 .sub-action-btn {
   padding: 0.3rem 0.625rem;
   border-radius: 6px;
-  font-size: 0.75rem;
-  font-weight: 500;
+  font-size: var(--font-size-tiny);
+  font-weight: var(--font-weight-medium);
   cursor: pointer;
   font-family: inherit;
   border: 1px solid transparent;
@@ -221,7 +221,7 @@
 .cancel-btn {
   background: transparent;
   border-color: #27272a;
-  color: #71717a;
+  color: var(--text-muted);
 }
 
 .cancel-btn:hover {
@@ -233,13 +233,13 @@
 .delete-btn {
   background: transparent;
   border-color: #27272a;
-  color: #71717a;
+  color: var(--text-muted);
 }
 
 .delete-btn:hover {
   background-color: rgba(239, 68, 68, 0.08);
   border-color: rgba(239, 68, 68, 0.3);
-  color: #fca5a5;
+  color: var(--text-error);
 }
 
 .sub-action-btn:disabled {

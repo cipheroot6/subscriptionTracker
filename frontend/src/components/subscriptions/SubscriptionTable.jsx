@@ -84,11 +84,14 @@ export default function SubscriptionTable({ subscriptions, loading, onRefresh })
                   <td>
                     <div className="st-actions">
                       <button className="st-btn st-btn-edit" onClick={() => setEditTarget(sub)}>Edit</button>
-                      {sub.status === 'active' && (
-                        <button className="st-btn st-btn-cancel" onClick={() => handleCancel(sub._id)} disabled={cancellingId === sub._id}>
-                          {cancellingId === sub._id ? '…' : 'Cancel'}
-                        </button>
-                      )}
+                      <button 
+                        className="st-btn st-btn-cancel" 
+                        style={{ visibility: sub.status === 'active' ? 'visible' : 'hidden' }}
+                        onClick={() => sub.status === 'active' && handleCancel(sub._id)} 
+                        disabled={cancellingId === sub._id}
+                      >
+                        {cancellingId === sub._id ? '…' : 'Cancel'}
+                      </button>
                       <button className="st-btn st-btn-delete" onClick={() => setDeleteTarget(sub)}>Delete</button>
                     </div>
                   </td>

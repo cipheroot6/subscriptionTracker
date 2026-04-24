@@ -26,39 +26,44 @@
 }
 
 .subs-title {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-bold);
   color: #f1f5f9;
-  margin: 0 0 2px;
+  margin: 0 0 0.5rem;
 }
 
 .subs-subtitle {
-  font-size: 0.875rem;
+  font-size: var(--font-size-sm);
   color: #64748b;
   margin: 0;
 }
 
 .subs-add-btn {
-  background: #3b82f6;
-  color: #fff;
-  border: none;
-  border-radius: 10px;
   padding: 0.625rem 1.25rem;
-  font-size: 0.875rem;
-  font-weight: 500;
+  background-color: #f4f4f5;
+  border: none;
+  border-radius: 8px;
+  color: #09090b;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
   cursor: pointer;
+  font-family: inherit;
+  transition: background-color 0.15s ease;
   white-space: nowrap;
-  transition: background 0.15s;
+  flex-shrink: 0;
 }
-.subs-add-btn:hover { background: #2563eb; }
+.subs-add-btn:hover { background-color: #e4e4e7; }
 
+/* Mobile: show short label, desktop: show full label */
+.subs-add-btn .btn-label-short { display: none; }
+.subs-add-btn .btn-label-full  { display: inline; }
 .subs-error {
   background: rgba(239,68,68,0.08);
   border: 1px solid rgba(239,68,68,0.2);
   border-radius: 10px;
   padding: 0.875rem 1rem;
   color: #f87171;
-  font-size: 0.875rem;
+  font-size: var(--font-size-sm);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -71,7 +76,7 @@
   border-radius: 6px;
   color: #f87171;
   padding: 4px 10px;
-  font-size: 0.8125rem;
+  font-size: var(--font-size-xs);
   cursor: pointer;
 }
 
@@ -83,7 +88,7 @@
 }
 
 .subs-count {
-  font-size: 0.8125rem;
+  font-size: var(--font-size-xs);
   color: #475569;
 }
 
@@ -91,7 +96,7 @@
   background: none;
   border: none;
   color: #3b82f6;
-  font-size: 0.8125rem;
+  font-size: var(--font-size-xs);
   cursor: pointer;
   padding: 0;
 }
@@ -116,6 +121,35 @@
 }
 
 @media (max-width: 768px) {
-  .subs-main { margin-left: 0; padding: 1rem; }
+  .subs-main { margin-left: 0; padding: 1.25rem; }
   .sidebar-toggle-btn { display: flex; }
+  
+  .subs-subtitle { display: none; }
+  
+  .subs-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .subs-header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    min-width: 0;
+    flex: 1;
+  }
+  
+  .subs-title {
+    font-size: var(--font-size-h1-mobile);
+    line-height: 36px;
+    margin: 0;
+  }
+  
+  .subs-add-btn {
+    padding: 0.5rem 1rem;
+    font-size: var(--font-size-xs);
+  }
+  .subs-add-btn .btn-label-full { display: none; }
+  .subs-add-btn .btn-label-short { display: inline; }
 }
