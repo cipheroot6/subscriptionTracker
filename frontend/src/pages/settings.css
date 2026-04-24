@@ -55,7 +55,7 @@
 }
 
 .settings-section-header {
-  padding: 1.25rem 1.5rem;
+  padding: 1rem 1.5rem 0.75rem;
   border-bottom: 1px solid #1a1a1e;
 }
 
@@ -72,7 +72,7 @@
 }
 
 .settings-section-body {
-  padding: 1.5rem;
+  padding: 1rem 1.5rem 1.5rem;
 }
 
 /* ── Avatar row ──────────────────────────────────────────── */
@@ -152,6 +152,15 @@
 
 .settings-field input:focus {
   border-color: #3f3f46;
+}
+
+.settings-readonly-text {
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  padding: 0.5rem 0 0.25rem;
+  cursor: default;
+  letter-spacing: 0.02em;
 }
 
 /* ── Actions ─────────────────────────────────────────────── */
@@ -346,4 +355,26 @@
   }
   .sidebar-toggle-btn { display: flex; }
   .settings-field-row { grid-template-columns: 1fr; }
+  
+  .settings-subtitle { display: none; }
+  
+  .settings-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .settings-header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    min-width: 0;
+    flex: 1;
+  }
+  
+  .settings-title {
+    font-size: var(--font-size-h1-mobile);
+    line-height: 36px;
+    margin: 0;
+  }
 }

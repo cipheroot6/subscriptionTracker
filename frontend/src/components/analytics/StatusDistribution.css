@@ -5,7 +5,7 @@
   padding: 1.5rem;
 }
 
-.sd-title { font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: #f1f5f9; margin: 0 0 2px; }
+.sd-title { font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: #f1f5f9; margin: 0 0 0.25rem; }
 .sd-sub   { font-size: var(--font-size-tiny); color: #64748b; margin: 0 0 1.5rem; }
 
 .sd-body {

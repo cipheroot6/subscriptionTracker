@@ -161,12 +161,7 @@ export default function Settings() {
                 </div>
                 <div className="settings-field">
                   <label>Email Address</label>
-                  <input
-                    type="email"
-                    value={profile.email}
-                    onChange={e => setProfile(p => ({ ...p, email: e.target.value }))}
-                    placeholder="you@example.com"
-                  />
+                  <div className="settings-readonly-text">{profile.email}</div>
                 </div>
               </div>
               <Toast {...(profileToast || {})} onDismiss={() => setProfileToast(null)} />
@@ -192,27 +187,25 @@ export default function Settings() {
                     autoComplete="current-password"
                   />
                 </div>
-                <div className="settings-field-row">
-                  <div className="settings-field">
-                    <label>New Password</label>
-                    <input
-                      type="password"
-                      value={pwForm.newPassword}
-                      onChange={e => setPwForm(p => ({ ...p, newPassword: e.target.value }))}
-                      placeholder="••••••••"
-                      autoComplete="new-password"
-                    />
-                  </div>
-                  <div className="settings-field">
-                    <label>Confirm Password</label>
-                    <input
-                      type="password"
-                      value={pwForm.confirmPassword}
-                      onChange={e => setPwForm(p => ({ ...p, confirmPassword: e.target.value }))}
-                      placeholder="••••••••"
-                      autoComplete="new-password"
-                    />
-                  </div>
+                <div className="settings-field">
+                  <label>New Password</label>
+                  <input
+                    type="password"
+                    value={pwForm.newPassword}
+                    onChange={e => setPwForm(p => ({ ...p, newPassword: e.target.value }))}
+                    placeholder="••••••••"
+                    autoComplete="new-password"
+                  />
+                </div>
+                <div className="settings-field">
+                  <label>Confirm Password</label>
+                  <input
+                    type="password"
+                    value={pwForm.confirmPassword}
+                    onChange={e => setPwForm(p => ({ ...p, confirmPassword: e.target.value }))}
+                    placeholder="••••••••"
+                    autoComplete="new-password"
+                  />
                 </div>
               </div>
               <Toast {...(pwToast || {})} onDismiss={() => setPwToast(null)} />

@@ -42,11 +42,11 @@ export const signUp = async (req, res, next) => {
       { expiresIn: JWT_EXPIRES_IN },
     );
 
+    const user = newUser[0].toObject ? newUser[0].toObject() : { ...newUser[0] };
+    delete user.password;
+
     await session.commitTransaction();
     session.endSession();
-
-    const user = { ...newUser[0] };
-    delete user.password;
 
     res.status(201).json({
       success: true,
@@ -58,7 +58,9 @@ export const signUp = async (req, res, next) => {
       },
     });
   } catch (error) {
-    await session.abortTransaction();
+    if (session.inTransaction()) {
+      await session.abortTransaction();
+    }
     session.endSession();
     next(error);
   }

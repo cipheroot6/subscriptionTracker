@@ -41,6 +41,7 @@ export default function CategoryBreakdown({ subscriptions }) {
   return (
     <div className="cbd-card">
       <h3 className="cbd-title">Spend by Category</h3>
+      <p className="cbd-sub" style={{ visibility: 'hidden' }}>Spacer</p>
       {total === 0 ? (
         <div className="cbd-empty">No active subscriptions.</div>
       ) : (

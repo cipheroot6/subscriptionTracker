@@ -9,7 +9,12 @@
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
   color: #f1f5f9;
-  margin: 0 0 1.25rem;
+  margin: 0 0 0.25rem;
+}
+
+.cbd-sub {
+  font-size: var(--font-size-tiny);
+  margin: 0 0 1.5rem;
 }
 
 .cbd-empty { color: #475569; font-size: var(--font-size-sm); padding: 2rem 0; text-align: center; }
@@ -23,16 +28,16 @@
 
 .cbd-donut-wrap {
   position: relative;
-  width: 120px;
-  height: 120px;
+  width: 150px;
+  height: 150px;
   flex-shrink: 0;
 }
 
 .cbd-donut {
-  width: 120px; height: 120px;
+  width: 150px; height: 150px;
   border-radius: 50%;
-  mask: radial-gradient(transparent 42px, black 43px);
-  -webkit-mask: radial-gradient(transparent 42px, black 43px);
+  mask: radial-gradient(transparent 57px, black 58px);
+  -webkit-mask: radial-gradient(transparent 57px, black 58px);
 }
 
 .cbd-donut-center {
