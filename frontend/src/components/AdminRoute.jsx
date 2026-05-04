@@ -23,5 +23,9 @@ export default function AdminRoute({ children }) {
   if (!isAuthenticated) return <Navigate to="/sign-in" replace />;
   if (user?.role !== 'admin') return <Navigate to="/" replace />;
 
+  if (!user?.isVerified) {
+    return <Navigate to={`/verify-email?email=${user?.email}`} replace />;
+  }
+
   return children;
 }

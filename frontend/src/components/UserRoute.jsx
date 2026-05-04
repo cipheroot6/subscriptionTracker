@@ -15,5 +15,8 @@ export default function UserRoute({ children }) {
   if (loading) return <Loader />;
   if (!isAuthenticated) return <Navigate to="/sign-in" replace />;
   if (user?.role === 'admin') return <Navigate to="/admin" replace />;
+  if (!user?.isVerified) {
+    return <Navigate to={`/verify-email?email=${user?.email}`} replace />;
+  }
   return children;
 }

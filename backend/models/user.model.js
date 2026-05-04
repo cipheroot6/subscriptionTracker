@@ -1,39 +1,54 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema(
+  {
     name: {
-        type: String,
-        required: [true, 'User name is required'],
-        trim: true,
-        minLength: 2,
-        maxLength: 50,
+      type: String,
+      required: [true, "User name is required"],
+      trim: true,
+      minLength: 2,
+      maxLength: 50,
     },
     email: {
-        type: String,
-        required: [true, 'User email is required'],
-        unique: true,
-        trim: true,
-        lowercase: true,
-        match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Please provide a valid email'],
-        minLength: 5,
-        maxLength: 255,
+      type: String,
+      required: [true, "User email is required"],
+      unique: true,
+      trim: true,
+      lowercase: true,
+      match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Please provide a valid email"],
+      minLength: 5,
+      maxLength: 255,
     },
     password: {
-        type: String,
-        required: [true, 'User password is required'],
-        minLength: 6,
-        maxLength: 1024,
+      type: String,
+      required: [true, "User password is required"],
+      minLength: 6,
+      maxLength: 1024,
     },
     role: {
-        type: String,
-        required: [true, 'User role is required'],
-        enum: ['user', 'admin'],
-        default: 'user',
+      type: String,
+      required: [true, "User role is required"],
+      enum: ["user", "admin"],
+      default: "user",
     },
-}, {
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+      default: null,
+    },
+    verificationTokenExpiry: {
+      type: Date,
+      default: null,
+    },
+  },
+  {
     timestamps: true,
-});
+  },
+);
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
 
 export default User;

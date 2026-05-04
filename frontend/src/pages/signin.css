@@ -578,3 +578,18 @@
 .signin-forgot-row .forgot-link:hover {
   color: var(--text-primary);
 }
+
+.demo-hint {
+  font-size: var(--font-size-tiny);
+  margin-top: 1rem;
+  color: var(--text-muted);
+}
+
+.demo-hint button {
+  background: none;
+  border: none;
+  color: #3b82f6;
+  cursor: pointer;
+  font-size: inherit;
+  text-decoration: underline;
+}

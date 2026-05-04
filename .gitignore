@@ -36,8 +36,7 @@ lerna-debug.log*
 *.sln
 *.sw?
 
-AGENTS.md
-error.md
-MEMORY.md
-notes.md
-plan.md
+**/**/*.md 
+!README.md
+
+.sisyphus

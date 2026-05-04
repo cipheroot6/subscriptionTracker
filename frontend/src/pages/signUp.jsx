@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../lib/api";
-import { useAuth } from "../context/AuthContext";
 import "./signUp.css";
 
 const GoogleIcon = () => (
@@ -81,7 +80,7 @@ const getPasswordStrength = (password) => {
 };
 
 export default function SignUp() {
-  const { signIn } = useAuth();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -125,11 +124,9 @@ export default function SignUp() {
 
     setLoading(true);
     try {
-      const { confirmPassword, ...submitData } = formData;
-      const res = await api.post("/auth/sign-up", submitData);
-      const { token, user } = res.data.data;
-      signIn(token, user);
-      window.location.href = "/";
+      const { confirmPassword: _, ...submitData } = formData;
+      await api.post("/auth/sign-up", submitData);
+      navigate(`/verify-email?email=${formData.email}`);
     } catch (err) {
       setError(
         err.response?.data?.error ||

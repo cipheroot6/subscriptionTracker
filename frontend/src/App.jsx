@@ -13,6 +13,9 @@ import UserRoute from "./components/UserRoute";
 import AdminRoute from "./components/AdminRoute";
 import NotFound from "./pages/notFound";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
+import Landing from "./pages/landingPage";
+import VerifyEmail from "./pages/verifyEmail";
+// import EmailSentPage from "./pages/EmailSentPage";
 
 function App() {
   return (
@@ -21,10 +24,13 @@ function App() {
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/forgot-password" element={<ForgetPassword />} />
+        <Route path="/verify-email" element={<VerifyEmail />} />
+        <Route path="/" element={<Landing />} />
+        {/* <Route path="/email-sent" element={<EmailSentPage />} /> */}
 
         {/* Regular user pages — admins are blocked and redirected to /admin */}
         <Route
-          path="/"
+          path="/dashboard"
           element={
             <UserRoute>
               <Dashboard />

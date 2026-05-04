@@ -12,5 +12,8 @@ export const {
   ARCJET_KEY,
   QSTASH_TOKEN,
   QSTASH_URL,
-  SERVER_URL
+  SERVER_URL,
+  BREVO_API_KEY,
+  BREVO_SENDER_NAME,
+  BREVO_SENDER_EMAIL,
 } = process.env;

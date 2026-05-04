@@ -67,6 +67,10 @@ export default function SignIn() {
       signIn(token, user);
       navigate(user.role === "admin" ? "/admin" : "/", { replace: true });
     } catch (err) {
+      if (err.response?.status === 403) {
+        navigate(`/verify-email?email=${formData.email}`);
+        return;
+      }
       setError(
         err.response?.data?.error ||
           err.response?.data?.message ||
@@ -134,6 +138,16 @@ export default function SignIn() {
 
         <p className="signin-forgot-row">
           <Link to="/forgot-password" className="forgot-link">Forgot password?</Link>
+        </p>
+
+        <p className="demo-hint">
+          Just browsing?{' '}
+          <button
+            type="button"
+            onClick={() => setFormData({ email: 'demo@subtracker.dev', password: 'Demo1234!' })}
+          >
+            Use demo account
+          </button>
         </p>
 
         <p className="signin-footer">
