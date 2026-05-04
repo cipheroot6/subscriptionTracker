@@ -30,5 +30,3 @@ export const sendEmail = async ({ to, subject, htmlContent }) => {
     to: [{ email: to }],
   });
 };
-
-console.log("API KEY:", process.env.BREVO_API_KEY?.slice(0, 10) + "...");

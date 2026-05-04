@@ -11,24 +11,53 @@ import Analytics from "./pages/analytics";
 import ProtectedRoute from "./components/protectedRoutes";
 import UserRoute from "./components/UserRoute";
 import AdminRoute from "./components/AdminRoute";
+import PublicRoute from "./components/PublicRoute";
 import NotFound from "./pages/notFound";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 import Landing from "./pages/landingPage";
 import VerifyEmail from "./pages/verifyEmail";
-// import EmailSentPage from "./pages/EmailSentPage";
+import ResetPassword from "./pages/resetPassword";
 
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/sign-up" element={<SignUp />} />
-        <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/forgot-password" element={<ForgetPassword />} />
+        <Route path="/reset-password:token" element={<ResetPassword />} />
+        <Route
+          path="/"
+          element={
+            <PublicRoute>
+              <Landing />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/sign-up"
+          element={
+            <PublicRoute>
+              <SignUp />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/sign-in"
+          element={
+            <PublicRoute>
+              <SignIn />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/forgot-password"
+          element={
+            <PublicRoute>
+              <ForgetPassword />
+            </PublicRoute>
+          }
+        />
         <Route path="/verify-email" element={<VerifyEmail />} />
-        <Route path="/" element={<Landing />} />
-        {/* <Route path="/email-sent" element={<EmailSentPage />} /> */}
 
-        {/* Regular user pages — admins are blocked and redirected to /admin */}
+        {/* Regular user pages */}
         <Route
           path="/dashboard"
           element={
@@ -54,7 +83,7 @@ function App() {
           }
         />
 
-        {/* Settings is accessible to both roles */}
+        {/* Settings accessible to both roles */}
         <Route
           path="/settings"
           element={
@@ -73,6 +102,7 @@ function App() {
             </AdminRoute>
           }
         />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
       <VercelAnalytics />

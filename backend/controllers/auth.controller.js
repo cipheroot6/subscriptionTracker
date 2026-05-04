@@ -108,7 +108,7 @@ export const signIn = async (req, res, next) => {
       throw new Error("JWT_SECRET missing");
     }
 
-    // block unverified users 
+    // block unverified users
     if (!user.isVerified) {
       const error = new Error(
         "Please verify your email address before signing in.",
@@ -146,7 +146,49 @@ export const signOut = async (req, res, next) => {
 
 export const forgotPassword = async (req, res, next) => {
   try {
-    // TODO: implement in Step 3
+    const { email } = req.body;
+
+    if (!email) {
+      const error = new Error("Email is required.");
+      error.status = 400;
+      throw error;
+    }
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(200).json({
+        success: true,
+        message: "If that email exists, a reset link has been sent.",
+      });
+    }
+
+    // Generate token
+    const rawToken = crypto.randomBytes(32).toString("hex");
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(rawToken)
+      .digest("hex");
+    const tokenExpiry = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
+
+    user.resetPasswordToken = hashedToken;
+    user.resetPasswordExpire = tokenExpiry;
+    await user.save();
+
+    const resetUrl = `${process.env.CLIENT_URL}/reset-password?token=${rawToken}`;
+
+    // Send Email - Make sure this part is correct
+    await sendEmail({
+      to: user.email,
+      subject: "Reset Your Password",
+      htmlContent: `
+        <h2>Password Reset Request</h2>
+        <p>Click the link below to reset your password:</p>
+        <a href="${resetUrl}" target="_blank">Reset Password</a>
+        <p>This link expires in 15 minutes.</p>
+      `,
+    });
+
     res.status(200).json({
       success: true,
       message: "If that email exists, a reset link has been sent.",
@@ -166,10 +208,7 @@ export const verifyEmail = async (req, res, next) => {
       throw error;
     }
 
-    const hashedToken = crypto
-      .createHash("sha256")
-      .update(token)
-      .digest("hex");
+    const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
 
     const user = await User.findOne({
       verificationToken: hashedToken,
