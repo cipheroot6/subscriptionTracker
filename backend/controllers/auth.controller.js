@@ -172,7 +172,7 @@ export const forgotPassword = async (req, res, next) => {
     const tokenExpiry = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
 
     user.resetPasswordToken = hashedToken;
-    user.resetPasswordExpire = tokenExpiry;
+    user.resetPasswordTokenExpiry = tokenExpiry;
     await user.save();
 
     const resetUrl = `${process.env.CLIENT_URL}/reset-password?token=${rawToken}`;
@@ -295,6 +295,47 @@ export const resendVerification = async (req, res, next) => {
     return res.status(200).json({
       success: true,
       message: "Verification email resent. Please check your inbox.",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const resetPassword = async (req, res, next) => {
+  try {
+    const { token, newPassword } = req.body;
+
+    if (!token || !newPassword) {
+      const error = new Error("Token and new password are required.");
+      error.status = 400;
+      throw error;
+    }
+
+    const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+
+    const user = await User.findOne({
+      resetPasswordToken: hashedToken,
+      resetPasswordTokenExpiry: { $gt: new Date() },
+    });
+
+    if (!user) {
+      const error = new Error("This reset link is invalid or has expired.");
+      error.status = 400;
+      throw error;
+    }
+
+    // hash new password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    user.password = hashedPassword;
+    user.resetPasswordToken = null;
+    user.resetPasswordTokenExpiry = null;
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Password reset successfully.",
     });
   } catch (error) {
     next(error);

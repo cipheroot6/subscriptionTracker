@@ -22,7 +22,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/reset-password:token" element={<ResetPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route
           path="/"
           element={

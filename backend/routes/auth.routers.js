@@ -6,6 +6,7 @@ import {
   forgotPassword,
   verifyEmail,
   resendVerification,
+  resetPassword,
 } from "../controllers/auth.controller.js";
 
 const authRouter = Router();
@@ -22,5 +23,7 @@ authRouter.post("/forgot-password", forgotPassword);
 authRouter.get("/verify-email", verifyEmail);
 
 authRouter.post("/resend-verification", resendVerification);
+
+authRouter.post("/reset-password", resetPassword);
 
 export default authRouter;
