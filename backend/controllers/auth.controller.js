@@ -5,6 +5,12 @@ import crypto from "crypto";
 import User from "../models/user.model.js";
 import { JWT_SECRET, JWT_EXPIRES_IN } from "../config/env.js";
 import { sendEmail } from "../config/brevo.js";
+import {
+  verificationEmailTemplate,
+  passwordResetEmailTemplate,
+  welcomeEmailTemplate,
+  resendVerificationEmailTemplate,
+} from "../config/emailTemplates.js";
 
 export const signUp = async (req, res, next) => {
   const session = await mongoose.startSession();
@@ -56,13 +62,7 @@ export const signUp = async (req, res, next) => {
     await sendEmail({
       to: email,
       subject: "Verify your SubTracker account",
-      htmlContent: `
-        <h2>Welcome to SubTracker!</h2>
-        <p>Click the button below to verify your email address.</p>
-        <a href="${verificationURL}" style="display:inline-block;padding:10px 20px;background:#3b82f6;color:#fff;text-decoration:none;border-radius:6px;">Verify Email</a>
-        <p>This link expires in 24 hours.</p>
-        <p>Or paste this link: ${verificationURL}</p>
-      `,
+      htmlContent: verificationEmailTemplate(name, verificationURL),
     });
 
     console.log("Verification URL (dev):", verificationURL);
@@ -177,16 +177,11 @@ export const forgotPassword = async (req, res, next) => {
 
     const resetUrl = `${process.env.CLIENT_URL}/reset-password?token=${rawToken}`;
 
-    // Send Email - Make sure this part is correct
+    // Send Email
     await sendEmail({
       to: user.email,
       subject: "Reset Your Password",
-      htmlContent: `
-        <h2>Password Reset Request</h2>
-        <p>Click the link below to reset your password:</p>
-        <a href="${resetUrl}" target="_blank">Reset Password</a>
-        <p>This link expires in 15 minutes.</p>
-      `,
+      htmlContent: passwordResetEmailTemplate(user.name, resetUrl),
     });
 
     res.status(200).json({
@@ -225,6 +220,12 @@ export const verifyEmail = async (req, res, next) => {
     user.verificationToken = null;
     user.verificationTokenExpiry = null;
     await user.save();
+
+    sendEmail({
+      to: user.email,
+      subject: "Welcome to SubTracker!",
+      htmlContent: welcomeEmailTemplate(user.name),
+    }).catch((err) => console.error("Welcome email failed:", err));
 
     const jwtToken = jwt.sign(
       { userid: user._id, role: user.role },
@@ -281,13 +282,7 @@ export const resendVerification = async (req, res, next) => {
     await sendEmail({
       to: user.email,
       subject: "Verify your SubTracker account",
-      htmlContent: `
-        <h2>Verify your email address</h2>
-        <p>Click the button below to verify your email address.</p>
-        <a href="${verificationURL}" style="display:inline-block;padding:10px 20px;background:#3b82f6;color:#fff;text-decoration:none;border-radius:6px;">Verify Email</a>
-        <p>This link expires in 24 hours.</p>
-        <p>Or paste this link: ${verificationURL}</p>
-      `,
+      htmlContent: resendVerificationEmailTemplate(user.name, verificationURL),
     });
 
     console.log("Resend verification URL (dev):", verificationURL);

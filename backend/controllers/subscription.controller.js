@@ -1,6 +1,9 @@
 import Subscription from "../models/subscription.model.js";
+import dayjs from "dayjs";
 import { workflowClient } from "../config/upstash.js";
 import { SERVER_URL } from "../config/env.js";
+import { sendEmail } from "../config/brevo.js";
+import { subscriptionAddedEmailTemplate } from "../config/emailTemplates.js";
 
 export const createSubscription = async (req, res, next) => {
   try {
@@ -8,6 +11,21 @@ export const createSubscription = async (req, res, next) => {
       ...req.body,
       user: req.user._id,
     });
+
+    const fullSubscription = await Subscription.findById(
+      subscription._id,
+    ).populate("user", "name email");
+    const { user, name: subName, renewalDate } = fullSubscription;
+
+    sendEmail({
+      to: user.email,
+      subject: `Subscription Added: ${subName}`,
+      htmlContent: subscriptionAddedEmailTemplate(
+        user.name,
+        subName,
+        dayjs(renewalDate).format("MMMM D, YYYY"),
+      ),
+    }).catch((err) => console.error("Subscription added email failed:", err));
 
     // Trigger workflow separately — don't let a trigger failure
     // kill the subscription creation or return an error to the client.
@@ -93,7 +111,10 @@ export const updateSubscription = async (req, res, next) => {
       error.status = 404;
       throw error;
     }
-    if (subscription.user.toString() !== req.user.id && req.user.role !== "admin") {
+    if (
+      subscription.user.toString() !== req.user.id &&
+      req.user.role !== "admin"
+    ) {
       const error = new Error("Not authorized");
       error.status = 403;
       throw error;
@@ -101,7 +122,7 @@ export const updateSubscription = async (req, res, next) => {
     const updated = await Subscription.findByIdAndUpdate(
       req.params.id,
       req.body,
-      { new: true, runValidators: true }
+      { new: true, runValidators: true },
     );
     res.status(200).json({ success: true, data: updated });
   } catch (error) {
@@ -117,7 +138,10 @@ export const cancelSubscription = async (req, res, next) => {
       error.status = 404;
       throw error;
     }
-    if (subscription.user.toString() !== req.user.id && req.user.role !== "admin") {
+    if (
+      subscription.user.toString() !== req.user.id &&
+      req.user.role !== "admin"
+    ) {
       const error = new Error("Not authorized");
       error.status = 403;
       throw error;

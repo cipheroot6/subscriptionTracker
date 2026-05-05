@@ -46,7 +46,7 @@ const XIcon = () => (
 );
 
 const baseNavItems = [
-  { to: '/', label: 'Dashboard', icon: <GridIcon />, end: true },
+  { to: '/dashboard', label: 'Dashboard', icon: <GridIcon />, end: true },
   { to: '/subscriptions', label: 'Subscriptions', icon: <CreditCardIcon /> },
   { to: '/analytics', label: 'Analytics', icon: <BarChartIcon /> },
   { to: '/settings', label: 'Settings', icon: <SettingsIcon /> },
