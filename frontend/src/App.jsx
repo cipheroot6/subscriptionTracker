@@ -17,11 +17,13 @@ import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 import Landing from "./pages/landingPage";
 import VerifyEmail from "./pages/verifyEmail";
 import ResetPassword from "./pages/resetPassword";
+import OAuthSuccess from "./pages/oauthSuccess";
 
 function App() {
   return (
     <>
       <Routes>
+        <Route path="/oauth-success" element={<OAuthSuccess />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route
           path="/"

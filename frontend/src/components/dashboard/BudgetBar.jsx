@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useAuth } from '../../context/AuthContext';
+import api from '../../lib/api';
 import './BudgetBar.css';
 
 const toMonthly = (price, frequency) => {
@@ -20,11 +22,15 @@ const CheckIcon = () => (
 );
 
 export default function BudgetBar({ subscriptions }) {
-  const [budget, setBudget] = useState(() => {
-    return parseFloat(localStorage.getItem('budget') || '100');
-  });
+  const { user, updateUserData } = useAuth();
+  const [budget, setBudget] = useState(user?.budget || 100);
   const [editing, setEditing] = useState(false);
   const [inputVal, setInputVal] = useState('');
+
+  // Keep local state in sync if user object changes (e.g. initial fetch)
+  useEffect(() => {
+    if (user?.budget) setBudget(user.budget);
+  }, [user?.budget]);
 
   const active = subscriptions.filter(s => s.status === 'active');
   const spent = active.reduce((sum, s) => sum + toMonthly(s.price, s.frequency), 0);
@@ -37,11 +43,19 @@ export default function BudgetBar({ subscriptions }) {
     setEditing(true);
   };
 
-  const saveBudget = () => {
+  const saveBudget = async () => {
     const val = parseFloat(inputVal);
     if (!isNaN(val) && val > 0) {
-      setBudget(val);
-      localStorage.setItem('budget', val.toString());
+      try {
+        const res = await api.put(`/users/${user._id}`, { budget: val });
+        if (res.data.success) {
+          setBudget(val);
+          updateUserData(res.data.data);
+        }
+      } catch (error) {
+        console.error('Failed to update budget:', error);
+        alert('Failed to update budget. Please try again.');
+      }
     }
     setEditing(false);
   };

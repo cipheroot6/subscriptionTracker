@@ -1,401 +1,502 @@
-// Professional email templates for SubTracker
-// All templates use consistent styling and branding
+// ─────────────────────────────────────────────
+// SubTracker — Premium Email Templates
+// Design system: dark header · card blocks · clean footer
+// ─────────────────────────────────────────────
 
-const BRAND_COLOR = "#3b82f6"; // Brand blue
-const SECONDARY_COLOR = "#6b7280"; // Gray for secondary text
-const BUTTON_HOVER = "#2563eb"; // Darker blue for hover state
+const BRAND         = "#3b82f6";
+const BRAND_DARK    = "#1d4ed8";
+const BRAND_BG      = "#eff6ff";
+const SUCCESS       = "#10b981";
+const SUCCESS_BG    = "#ecfdf5";
+const WARNING       = "#f59e0b";
+const WARNING_BG    = "#fffbeb";
+const DANGER        = "#ef4444";
+const DANGER_BG     = "#fef2f2";
+const TEXT_PRIMARY  = "#111827";
+const TEXT_MUTED    = "#6b7280";
+const SURFACE       = "#ffffff";
+const BACKGROUND    = "#f4f6f9";
+const BORDER        = "#e5e7eb";
 
-/**
- * Base email wrapper with consistent styling
- */
-const baseTemplate = (bodyContent) => `
-<!DOCTYPE html>
-<html>
+// ─── Shared helpers ───────────────────────────────────────────────────────────
+
+const infoCard = (accentColor, accentBg, rows) => `
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:28px 0;border-radius:10px;overflow:hidden;border:1px solid ${BORDER};background:${accentBg};">
+    <tr><td style="padding:0;line-height:0;font-size:0;"><div style="height:3px;background:linear-gradient(90deg,${accentColor},${accentColor}cc);"></div></td></tr>
+    <tr><td style="padding:20px 24px;">
+      ${rows}
+    </td></tr>
+  </table>`;
+
+const infoRow = (label, value, valueColor = TEXT_PRIMARY) =>
+  `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
+    <tr>
+      <td style="font-size:11px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:${TEXT_MUTED};width:130px;padding-right:12px;vertical-align:top;">${label}</td>
+      <td style="font-size:15px;font-weight:600;color:${valueColor};vertical-align:top;">${value}</td>
+    </tr>
+  </table>`;
+
+const pill = (text, color, bg) =>
+  `<span style="display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:${color};background:${bg};">${text}</span>`;
+
+const featureItem = (icon, text) =>
+  `<tr>
+    <td width="28" valign="top" style="padding-top:1px;"><span style="font-size:16px;line-height:1.4;">${icon}</span></td>
+    <td style="font-size:14px;color:${TEXT_MUTED};line-height:1.6;padding-bottom:10px;">${text}</td>
+  </tr>`;
+
+const stepItem = (number, text) =>
+  `<tr>
+    <td width="32" valign="top" style="padding-bottom:12px;">
+      <span style="display:inline-block;width:22px;height:22px;border-radius:50%;background:${BRAND};color:#fff;font-size:11px;font-weight:700;text-align:center;line-height:22px;">${number}</span>
+    </td>
+    <td style="font-size:14px;color:${TEXT_MUTED};line-height:1.6;padding-bottom:12px;vertical-align:top;">${text}</td>
+  </tr>`;
+
+const ctaButton = (url, label, color = BRAND) =>
+  `<table cellpadding="0" cellspacing="0" border="0" style="margin:28px auto;">
+    <tr>
+      <td align="center" style="border-radius:8px;background:${color};">
+        <a href="${url}" target="_blank"
+          style="display:inline-block;padding:14px 36px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Inter',sans-serif;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;border-radius:8px;letter-spacing:0.02em;"
+        >${label}</a>
+      </td>
+    </tr>
+  </table>`;
+
+const fallbackLink = (url) =>
+  `<p style="font-size:12px;color:${TEXT_MUTED};margin:0 0 4px;text-align:center;">Button not working? Copy &amp; paste this link into your browser:</p>
+  <p style="word-break:break-all;font-size:11.5px;color:${BRAND};font-family:'Courier New',monospace;text-align:center;margin:0;">${url}</p>`;
+
+const securityNote = (color, bg, text) =>
+  `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:24px 0;border-radius:8px;background:${bg};overflow:hidden;">
+    <tr><td style="padding:14px 18px;font-size:13px;color:${color};line-height:1.6;">${text}</td></tr>
+  </table>`;
+
+// ─── Base template ─────────────────────────────────────────────────────────
+
+const baseTemplate = (bodyContent) => `<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-      background-color: #f3f4f6;
-      margin: 0;
-      padding: 0;
-    }
-    .email-container {
-      max-width: 600px;
-      margin: 0 auto;
-      background-color: #ffffff;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-    .header {
-      background: linear-gradient(135deg, ${BRAND_COLOR} 0%, ${BUTTON_HOVER} 100%);
-      color: white;
-      padding: 40px 20px;
-      text-align: center;
-    }
-    .header h1 {
-      margin: 0;
-      font-size: 28px;
-      font-weight: 600;
-    }
-    .content {
-      padding: 40px 30px;
-      color: #1f2937;
-      line-height: 1.6;
-    }
-    .content p {
-      margin: 15px 0;
-      font-size: 15px;
-    }
-    .content strong {
-      color: #111827;
-    }
-    .button {
-      display: inline-block;
-      background-color: ${BRAND_COLOR};
-      color: white;
-      padding: 12px 30px;
-      text-decoration: none;
-      border-radius: 6px;
-      font-weight: 500;
-      margin: 20px 0;
-      border: none;
-      font-size: 15px;
-      transition: background-color 0.3s;
-    }
-    .button:hover {
-      background-color: ${BUTTON_HOVER};
-    }
-    .button-container {
-      text-align: center;
-    }
-    .cta-box {
-      background-color: #eff6ff;
-      border-left: 4px solid ${BRAND_COLOR};
-      padding: 15px 20px;
-      margin: 20px 0;
-      border-radius: 4px;
-    }
-    .cta-box p {
-      margin: 5px 0;
-      font-size: 14px;
-    }
-    .link-alternative {
-      word-break: break-all;
-      font-size: 12px;
-      color: ${SECONDARY_COLOR};
-      font-family: 'Courier New', monospace;
-    }
-    .expiry-notice {
-      background-color: #fef3c7;
-      border-left: 4px solid #f59e0b;
-      padding: 15px 20px;
-      margin: 20px 0;
-      border-radius: 4px;
-      font-size: 14px;
-      color: #92400e;
-    }
-    .footer {
-      background-color: #f9fafb;
-      padding: 20px;
-      text-align: center;
-      border-top: 1px solid #e5e7eb;
-    }
-    .footer p {
-      margin: 5px 0;
-      font-size: 13px;
-      color: ${SECONDARY_COLOR};
-    }
-    .footer-link {
-      color: ${BRAND_COLOR};
-      text-decoration: none;
-    }
-    .footer-link:hover {
-      text-decoration: underline;
-    }
-    .divider {
-      border: 0;
-      border-top: 1px solid #e5e7eb;
-      margin: 30px 0;
-    }
-    .highlight {
-      background-color: #fef3c7;
-      padding: 2px 6px;
-      border-radius: 3px;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>SubTracker</title>
 </head>
-<body>
-  <div class="email-container">
-    ${bodyContent}
-    <div class="footer">
-      <p>SubTracker — Smart Subscription Management</p>
-      <p>© 2026 SubTracker. All rights reserved.</p>
-    </div>
-  </div>
+<body style="margin:0;padding:0;background-color:${BACKGROUND};font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Inter','Roboto',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:${BACKGROUND};padding:40px 16px;">
+    <tr>
+      <td align="center">
+
+        <!-- Wrapper -->
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;">
+
+          <!-- Logo bar -->
+          <tr>
+            <td align="center" style="padding-bottom:24px;">
+              <a href="https://subtracker.vercel.app" target="_blank" style="text-decoration:none;">
+                <span style="font-size:22px;font-weight:800;letter-spacing:-0.5px;color:${TEXT_PRIMARY};">Sub<span style="color:${BRAND};">Tracker</span></span>
+              </a>
+            </td>
+          </tr>
+
+          <!-- Card -->
+          <tr>
+            <td style="background:${SURFACE};border-radius:16px;border:1px solid ${BORDER};overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.06);">
+              ${bodyContent}
+
+              <!-- Footer inside card -->
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr><td style="padding:0 32px;"><div style="height:1px;background:${BORDER};"></div></td></tr>
+                <tr>
+                  <td style="padding:24px 32px;text-align:center;">
+                    <p style="margin:0 0 6px;font-size:13px;color:${TEXT_MUTED};">© 2026 SubTracker · Smart Subscription Management</p>
+                    <p style="margin:0;font-size:12px;color:#9ca3af;">
+                      You received this email because you have an account at SubTracker.<br/>
+                      If you have questions, reply to this email.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
+            </td>
+          </tr>
+
+          <!-- Space below card -->
+          <tr><td style="height:32px;"></td></tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
 </body>
-</html>
-`;
+</html>`;
 
-/**
- * Email verification (signup confirmation)
- */
+// ─────────────────────────────────────────────────────────────────────────────
+// 1. Verification Email (Signup)
+// ─────────────────────────────────────────────────────────────────────────────
+
 export const verificationEmailTemplate = (userName, verificationUrl) => {
-  const content = `
-    <div class="header">
-      <h1>🎉 Welcome to SubTracker!</h1>
-    </div>
-    <div class="content">
-      <p>Hi <strong>${userName}</strong>,</p>
-      <p>Thanks for signing up! We're excited to help you track and manage all your subscriptions in one place.</p>
-      
-      <p>To get started, please verify your email address by clicking the button below:</p>
-      
-      <div class="button-container">
-        <a href="${verificationUrl}" class="button">Verify Email Address</a>
-      </div>
-      
-      <div class="cta-box">
-        <p><strong>Link not working?</strong></p>
-        <p>Copy and paste this URL into your browser:</p>
-        <p class="link-alternative">${verificationUrl}</p>
-      </div>
-      
-      <div class="expiry-notice">
-        ⏱️ This verification link will expire in <strong>24 hours</strong>. Verify your email soon!
-      </div>
-      
-      <p>Questions? We're here to help. Just reply to this email.</p>
-      <p>Best regards,<br><strong>The SubTracker Team</strong></p>
-    </div>
-  `;
-  return baseTemplate(content);
+  const body = `
+    <!-- Header -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td style="padding:40px 32px 32px;background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%);border-radius:14px 14px 0 0;">
+          <p style="margin:0 0 10px;font-size:13px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Account Activation</p>
+          <h1 style="margin:0;font-size:26px;font-weight:700;color:#ffffff;letter-spacing:-0.5px;line-height:1.3;">Confirm your email address</h1>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Body -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td style="padding:32px 32px 24px;">
+
+          <p style="margin:0 0 20px;font-size:16px;color:${TEXT_PRIMARY};">Hi <strong>${userName}</strong>,</p>
+          <p style="margin:0 0 20px;font-size:15px;color:${TEXT_MUTED};line-height:1.7;">
+            Thanks for creating your SubTracker account. To get started, we just need to confirm this is really you.
+            Click the button below to verify your email address.
+          </p>
+
+          ${ctaButton(verificationUrl, "Verify Email Address")}
+
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+            <tr><td>${fallbackLink(verificationUrl)}</td></tr>
+          </table>
+
+          ${securityNote(
+            "#92400e", WARNING_BG,
+            `⏱ <strong>This link expires in 24 hours.</strong> If it expires, you can request a new one from the sign-in page.`
+          )}
+
+          <p style="margin:24px 0 0;font-size:15px;color:${TEXT_MUTED};line-height:1.7;">
+            Didn't create an account? You can safely ignore this email — no account will be activated.
+          </p>
+
+        </td>
+      </tr>
+    </table>`;
+  return baseTemplate(body);
 };
 
-/**
- * Password reset request
- */
+// ─────────────────────────────────────────────────────────────────────────────
+// 2. Password Reset
+// ─────────────────────────────────────────────────────────────────────────────
+
 export const passwordResetEmailTemplate = (userName, resetUrl) => {
-  const content = `
-    <div class="header">
-      <h1>🔐 Reset Your Password</h1>
-    </div>
-    <div class="content">
-      <p>Hi <strong>${userName}</strong>,</p>
-      <p>We received a request to reset your SubTracker password. If this wasn't you, you can safely ignore this email.</p>
-      
-      <p>To reset your password, click the button below:</p>
-      
-      <div class="button-container">
-        <a href="${resetUrl}" class="button">Reset Password</a>
-      </div>
-      
-      <div class="cta-box">
-        <p><strong>Or use this link:</strong></p>
-        <p class="link-alternative">${resetUrl}</p>
-      </div>
-      
-      <div class="expiry-notice">
-        ⏱️ This reset link will expire in <strong>15 minutes</strong>. Act quickly!
-      </div>
-      
-      <p><strong>Didn't request a password reset?</strong></p>
-      <p>If you didn't request this, your account is still secure. Someone may have entered your email by mistake, or it could be an attempt to access your account. Please <a href="mailto:support@subtracker.com" class="footer-link">contact support</a> if you're concerned.</p>
-      
-      <p>Best regards,<br><strong>The SubTracker Team</strong></p>
-    </div>
-  `;
-  return baseTemplate(content);
+  const body = `
+    <!-- Header -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td style="padding:40px 32px 32px;background:linear-gradient(135deg,#1a0a2e 0%,#3b1a6e 100%);border-radius:14px 14px 0 0;">
+          <p style="margin:0 0 10px;font-size:13px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Security</p>
+          <h1 style="margin:0;font-size:26px;font-weight:700;color:#ffffff;letter-spacing:-0.5px;line-height:1.3;">Reset your password</h1>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Body -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td style="padding:32px 32px 24px;">
+
+          <p style="margin:0 0 20px;font-size:16px;color:${TEXT_PRIMARY};">Hi <strong>${userName}</strong>,</p>
+          <p style="margin:0 0 20px;font-size:15px;color:${TEXT_MUTED};line-height:1.7;">
+            We received a request to reset the password for your SubTracker account.
+            Click the button below to choose a new password.
+          </p>
+
+          ${ctaButton(resetUrl, "Reset Password", BRAND_DARK)}
+
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+            <tr><td>${fallbackLink(resetUrl)}</td></tr>
+          </table>
+
+          ${securityNote(
+            "#7f1d1d", DANGER_BG,
+            `⏱ <strong>This link expires in 15 minutes</strong> for your security. After that, you'll need to request a new one.`
+          )}
+
+          ${securityNote(
+            "#374151", "#f9fafb",
+            `🔒 <strong>Didn't request this?</strong> Your password has <em>not</em> been changed. You can safely ignore this email. If you're concerned about your account's security, please <a href="mailto:support@subtracker.com" style="color:${BRAND};text-decoration:none;">contact support</a>.`
+          )}
+
+        </td>
+      </tr>
+    </table>`;
+  return baseTemplate(body);
 };
 
-/**
- * Welcome email (sent after email verification)
- */
+// ─────────────────────────────────────────────────────────────────────────────
+// 3. Welcome (post email-verification)
+// ─────────────────────────────────────────────────────────────────────────────
+
 export const welcomeEmailTemplate = (userName) => {
-  const content = `
-    <div class="header">
-      <h1>✅ Email Verified!</h1>
-    </div>
-    <div class="content">
-      <p>Hi <strong>${userName}</strong>,</p>
-      <p>Your email has been verified, and your SubTracker account is now fully activated! 🚀</p>
-      
-      <div class="cta-box">
-        <p><strong>You're all set!</strong></p>
-        <p>Log in to your dashboard to start adding your subscriptions and take control of your spending.</p>
-      </div>
-      
-      <p><strong>Here's what you can do with SubTracker:</strong></p>
-      <ul style="margin: 15px 0; padding-left: 20px;">
-        <li>📊 Track all your subscriptions in one dashboard</li>
-        <li>💰 See your total spending and budget insights</li>
-        <li>🔔 Get renewal reminders before payment dates</li>
-        <li>📈 Analyze spending patterns by category and frequency</li>
-        <li>🎯 Set budgets and receive alerts</li>
-      </ul>
-      
-      <p><strong>Next steps:</strong></p>
-      <ol style="margin: 15px 0; padding-left: 20px;">
-        <li>Sign in to your account</li>
-        <li>Add your first subscription</li>
-        <li>Explore your analytics dashboard</li>
-      </ol>
-      
-      <p>Need help getting started? Check out our <a href="#" class="footer-link">getting started guide</a> or <a href="mailto:support@subtracker.com" class="footer-link">reach out to support</a>.</p>
-      
-      <p>Happy tracking!<br><strong>The SubTracker Team</strong></p>
-    </div>
-  `;
-  return baseTemplate(content);
+  const body = `
+    <!-- Header -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td style="padding:40px 32px 32px;background:linear-gradient(135deg,#064e3b 0%,#065f46 100%);border-radius:14px 14px 0 0;">
+          <p style="margin:0 0 10px;font-size:13px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Account Verified</p>
+          <h1 style="margin:0;font-size:26px;font-weight:700;color:#ffffff;letter-spacing:-0.5px;line-height:1.3;">You're in, ${userName}!</h1>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Body -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td style="padding:32px 32px 24px;">
+
+          <p style="margin:0 0 20px;font-size:15px;color:${TEXT_MUTED};line-height:1.7;">
+            Your email is verified and your SubTracker account is fully activated.
+            Here's a quick look at what you can do:
+          </p>
+
+          <!-- Feature list -->
+          <table cellpadding="0" cellspacing="0" border="0" style="margin:4px 0 24px;width:100%;">
+            ${featureItem("📊", "Track all your subscriptions in one clean dashboard")}
+            ${featureItem("💰", "See your exact monthly and yearly spend at a glance")}
+            ${featureItem("🔔", "Get renewal reminders 7, 5, 2 and 1 day before charge")}
+            ${featureItem("📈", "Analyze spending by category, frequency, and trend")}
+            ${featureItem("🎯", "Set a monthly budget and get notified when you're close")}
+          </table>
+
+          <!-- Steps -->
+          <p style="margin:0 0 14px;font-size:14px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:${TEXT_PRIMARY};">Get started in 3 steps</p>
+          <table cellpadding="0" cellspacing="0" border="0" style="width:100%;margin-bottom:24px;">
+            ${stepItem(1, "Sign in to your dashboard")}
+            ${stepItem(2, "Add your first subscription")}
+            ${stepItem(3, "Explore your analytics and set your monthly budget")}
+          </table>
+
+          ${ctaButton("https://subtracker.vercel.app/sign-in", "Go to Dashboard", SUCCESS)}
+
+          <p style="margin:20px 0 0;font-size:14px;color:${TEXT_MUTED};text-align:center;line-height:1.6;">
+            Questions? Just reply to this email — we're always happy to help.
+          </p>
+
+        </td>
+      </tr>
+    </table>`;
+  return baseTemplate(body);
 };
 
-/**
- * Resend verification email
- */
+// ─────────────────────────────────────────────────────────────────────────────
+// 4. Resend Verification
+// ─────────────────────────────────────────────────────────────────────────────
+
 export const resendVerificationEmailTemplate = (userName, verificationUrl) => {
-  const content = `
-    <div class="header">
-      <h1>📧 Verify Your Email</h1>
-    </div>
-    <div class="content">
-      <p>Hi <strong>${userName}</strong>,</p>
-      <p>Here's a fresh verification link to complete your SubTracker setup.</p>
-      
-      <p>Click the button below to verify your email:</p>
-      
-      <div class="button-container">
-        <a href="${verificationUrl}" class="button">Verify Email Address</a>
-      </div>
-      
-      <div class="cta-box">
-        <p><strong>Link not working?</strong></p>
-        <p>Copy and paste this URL into your browser:</p>
-        <p class="link-alternative">${verificationUrl}</p>
-      </div>
-      
-      <div class="expiry-notice">
-        ⏱️ This link expires in <strong>24 hours</strong>
-      </div>
-      
-      <p>If you didn't request this email, you can safely ignore it.</p>
-      <p>Best regards,<br><strong>The SubTracker Team</strong></p>
-    </div>
-  `;
-  return baseTemplate(content);
+  const body = `
+    <!-- Header -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td style="padding:40px 32px 32px;background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%);border-radius:14px 14px 0 0;">
+          <p style="margin:0 0 10px;font-size:13px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Email Verification</p>
+          <h1 style="margin:0;font-size:26px;font-weight:700;color:#ffffff;letter-spacing:-0.5px;line-height:1.3;">Your new verification link</h1>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Body -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td style="padding:32px 32px 24px;">
+
+          <p style="margin:0 0 20px;font-size:16px;color:${TEXT_PRIMARY};">Hi <strong>${userName}</strong>,</p>
+          <p style="margin:0 0 20px;font-size:15px;color:${TEXT_MUTED};line-height:1.7;">
+            Here's your fresh verification link. Click the button below to verify your email address and activate your SubTracker account.
+          </p>
+
+          ${ctaButton(verificationUrl, "Verify Email Address")}
+
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+            <tr><td>${fallbackLink(verificationUrl)}</td></tr>
+          </table>
+
+          ${securityNote(
+            "#92400e", WARNING_BG,
+            `⏱ <strong>This link expires in 24 hours.</strong> If it expires again, you can request another from the sign-in page.`
+          )}
+
+          <p style="margin:24px 0 0;font-size:14px;color:${TEXT_MUTED};line-height:1.7;">
+            Didn't request this? You can safely ignore this email.
+          </p>
+
+        </td>
+      </tr>
+    </table>`;
+  return baseTemplate(body);
 };
 
-/**
- * Password change confirmation
- */
+// ─────────────────────────────────────────────────────────────────────────────
+// 5. Password Changed Confirmation
+// ─────────────────────────────────────────────────────────────────────────────
+
 export const passwordChangedEmailTemplate = (userName) => {
-  const content = `
-    <div class="header">
-      <h1>🔐 Password Updated</h1>
-    </div>
-    <div class="content">
-      <p>Hi <strong>${userName}</strong>,</p>
-      <p>Your SubTracker password has been successfully changed.</p>
-      
-      <div class="cta-box">
-        <p><strong>✓ Security Update</strong></p>
-        <p>Your account is now protected with your new password.</p>
-      </div>
-      
-      <p><strong>Didn't make this change?</strong></p>
-      <p>If you didn't change your password, please <a href="mailto:support@subtracker.com" class="footer-link">contact support immediately</a>. We recommend changing your password again from your account settings.</p>
-      
-      <p><strong>Need help?</strong></p>
-      <p>If you have any questions about your account security, please don't hesitate to reach out.</p>
-      
-      <p>Best regards,<br><strong>The SubTracker Team</strong></p>
-    </div>
-  `;
-  return baseTemplate(content);
+  const body = `
+    <!-- Header -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td style="padding:40px 32px 32px;background:linear-gradient(135deg,#1a0a2e 0%,#3b1a6e 100%);border-radius:14px 14px 0 0;">
+          <p style="margin:0 0 10px;font-size:13px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Security Alert</p>
+          <h1 style="margin:0;font-size:26px;font-weight:700;color:#ffffff;letter-spacing:-0.5px;line-height:1.3;">Password changed successfully</h1>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Body -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td style="padding:32px 32px 24px;">
+
+          <p style="margin:0 0 20px;font-size:16px;color:${TEXT_PRIMARY};">Hi <strong>${userName}</strong>,</p>
+          <p style="margin:0 0 20px;font-size:15px;color:${TEXT_MUTED};line-height:1.7;">
+            This is a confirmation that the password for your SubTracker account was changed on
+            <strong>${new Date().toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}</strong>.
+          </p>
+
+          ${infoCard(SUCCESS, SUCCESS_BG,
+            infoRow("Status", `${pill("Password Updated", "#065f46", "#d1fae5")}`)
+          )}
+
+          ${securityNote(
+            "#7f1d1d", DANGER_BG,
+            `🔒 <strong>Didn't make this change?</strong> Your account may be compromised. Please <a href="mailto:support@subtracker.com" style="color:${DANGER};font-weight:600;text-decoration:none;">contact support immediately</a> and change your password from a trusted device.`
+          )}
+
+          <p style="margin:20px 0 0;font-size:14px;color:${TEXT_MUTED};line-height:1.7;">
+            For your security, we recommend using a strong, unique password and not reusing passwords across sites.
+          </p>
+
+        </td>
+      </tr>
+    </table>`;
+  return baseTemplate(body);
 };
 
-/**
- * Subscription added confirmation
- */
+// ─────────────────────────────────────────────────────────────────────────────
+// 6. Subscription Added
+// ─────────────────────────────────────────────────────────────────────────────
+
 export const subscriptionAddedEmailTemplate = (
   userName,
   subscriptionName,
   renewalDate,
 ) => {
-  const content = `
-    <div class="header">
-      <h1>✅ Subscription Added</h1>
-    </div>
-    <div class="content">
-      <p>Hi <strong>${userName}</strong>,</p>
-      <p>Great! Your subscription has been added to SubTracker.</p>
-      
-      <div class="cta-box">
-        <p><strong>📌 ${subscriptionName}</strong></p>
-        <p>Renewal Date: <span class="highlight"><strong>${renewalDate}</strong></span></p>
-      </div>
-      
-      <p><strong>What happens next?</strong></p>
-      <ul style="margin: 15px 0; padding-left: 20px;">
-        <li>✓ We'll track this subscription for you</li>
-        <li>🔔 You'll get reminders before renewal (7, 5, 2, and 1 day before)</li>
-        <li>📊 This will be included in your spending analytics</li>
-      </ul>
-      
-      <p><strong>Want to see it in action?</strong></p>
-      <p>Log in to your dashboard to:</p>
-      <ul style="margin: 15px 0; padding-left: 20px;">
-        <li>View all your subscriptions</li>
-        <li>See your total monthly/yearly spending</li>
-        <li>Analyze spending by category</li>
-        <li>Add more subscriptions</li>
-      </ul>
-      
-      <p>Best regards,<br><strong>The SubTracker Team</strong></p>
-    </div>
-  `;
-  return baseTemplate(content);
+  const body = `
+    <!-- Header -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td style="padding:40px 32px 32px;background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);border-radius:14px 14px 0 0;">
+          <p style="margin:0 0 10px;font-size:13px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);">New Subscription</p>
+          <h1 style="margin:0;font-size:26px;font-weight:700;color:#ffffff;letter-spacing:-0.5px;line-height:1.3;">${subscriptionName} is being tracked</h1>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Body -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td style="padding:32px 32px 24px;">
+
+          <p style="margin:0 0 20px;font-size:16px;color:${TEXT_PRIMARY};">Hi <strong>${userName}</strong>,</p>
+          <p style="margin:0 0 8px;font-size:15px;color:${TEXT_MUTED};line-height:1.7;">
+            Your subscription has been added to SubTracker. Here's a summary:
+          </p>
+
+          ${infoCard(BRAND, BRAND_BG,
+            infoRow("Subscription", `<strong style="font-size:17px;">${subscriptionName}</strong>`) +
+            infoRow("Next Renewal", renewalDate, BRAND_DARK) +
+            infoRow("Reminders", "7, 5, 2 &amp; 1 day before renewal")
+          )}
+
+          <p style="margin:0 0 14px;font-size:14px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:${TEXT_PRIMARY};">What happens next</p>
+          <table cellpadding="0" cellspacing="0" border="0" style="width:100%;margin-bottom:24px;">
+            ${featureItem("✅", "SubTracker will monitor this subscription for you")}
+            ${featureItem("🔔", "You'll receive email reminders before each renewal")}
+            ${featureItem("📊", "It'll appear in your spending analytics immediately")}
+          </table>
+
+          ${ctaButton("https://subtracker.vercel.app/dashboard", "View Dashboard")}
+
+        </td>
+      </tr>
+    </table>`;
+  return baseTemplate(body);
 };
 
-/**
- * Subscription renewal reminder
- */
+// ─────────────────────────────────────────────────────────────────────────────
+// 7. Renewal Reminder
+// ─────────────────────────────────────────────────────────────────────────────
+
 export const renewalReminderEmailTemplate = (
   userName,
   subscriptionName,
   renewalDate,
   daysUntil,
 ) => {
-  const content = `
-    <div class="header">
-      <h1>🔔 Renewal Reminder</h1>
-    </div>
-    <div class="content">
-      <p>Hi <strong>${userName}</strong>,</p>
-      <p>A friendly reminder that your subscription is renewing soon!</p>
-      
-      <div class="cta-box">
-        <p><strong>📌 ${subscriptionName}</strong></p>
-        <p>Renews in: <span class="highlight"><strong>${daysUntil} day${daysUntil === 1 ? "" : "s"}</strong></span></p>
-        <p>Renewal Date: <strong>${renewalDate}</strong></p>
-      </div>
-      
-      <p><strong>Before renewal:</strong></p>
-      <ul style="margin: 15px 0; padding-left: 20px;">
-        <li>✓ Ensure your payment method is up to date</li>
-        <li>✓ Confirm you still want this subscription</li>
-        <li>✓ Check for any plan changes</li>
-      </ul>
-      
-      <p>If you have any concerns about this renewal or need to cancel the subscription, please log in to your SubTracker dashboard.</p>
-      
-      <p><strong>Stay in control of your subscriptions!</strong></p>
-      <p>Best regards,<br><strong>The SubTracker Team</strong></p>
-    </div>
-  `;
-  return baseTemplate(content);
+  const isUrgent    = daysUntil <= 2;
+  const accentColor = isUrgent ? WARNING  : BRAND;
+  const accentBg    = isUrgent ? WARNING_BG : BRAND_BG;
+  const urgencyText = daysUntil === 1 ? "tomorrow" : `in ${daysUntil} days`;
+  const headerBg    = isUrgent
+    ? "linear-gradient(135deg,#451a03 0%,#78350f 100%)"
+    : "linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%)";
+
+  const body = `
+    <!-- Header -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td style="padding:40px 32px 32px;background:${headerBg};border-radius:14px 14px 0 0;">
+          <p style="margin:0 0 10px;font-size:13px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Renewal Reminder</p>
+          <h1 style="margin:0;font-size:26px;font-weight:700;color:#ffffff;letter-spacing:-0.5px;line-height:1.3;">${subscriptionName} renews ${urgencyText}</h1>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Body -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td style="padding:32px 32px 24px;">
+
+          <p style="margin:0 0 20px;font-size:16px;color:${TEXT_PRIMARY};">Hi <strong>${userName}</strong>,</p>
+          <p style="margin:0 0 8px;font-size:15px;color:${TEXT_MUTED};line-height:1.7;">
+            Just a heads-up — your ${subscriptionName} subscription is coming up for renewal:
+          </p>
+
+          ${infoCard(accentColor, accentBg,
+            infoRow("Subscription", `<strong style="font-size:17px;">${subscriptionName}</strong>`) +
+            infoRow("Renewal Date", `<strong>${renewalDate}</strong>`, accentColor) +
+            infoRow("Days Until", `${pill(
+              daysUntil === 1 ? "Tomorrow" : `${daysUntil} days`,
+              isUrgent ? "#78350f" : "#1d4ed8",
+              isUrgent ? "#fde68a" : "#bfdbfe"
+            )}`)
+          )}
+
+          <p style="margin:0 0 14px;font-size:14px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:${TEXT_PRIMARY};">Before your renewal</p>
+          <table cellpadding="0" cellspacing="0" border="0" style="width:100%;margin-bottom:24px;">
+            ${featureItem("💳", "Make sure your payment method is up to date")}
+            ${featureItem("🔍", "Confirm you still want to continue this subscription")}
+            ${featureItem("📋", "Check for any plan changes or price adjustments")}
+          </table>
+
+          ${ctaButton("https://subtracker.vercel.app/dashboard", "Manage Subscriptions", isUrgent ? WARNING : BRAND)}
+
+          <p style="margin:20px 0 0;font-size:14px;color:${TEXT_MUTED};text-align:center;line-height:1.6;">
+            To stop receiving reminders for this subscription, update or cancel it from your dashboard.
+          </p>
+
+        </td>
+      </tr>
+    </table>`;
+  return baseTemplate(body);
 };
+
+// ─── Default export ────────────────────────────────────────────────────────
 
 export default {
   verificationEmailTemplate,

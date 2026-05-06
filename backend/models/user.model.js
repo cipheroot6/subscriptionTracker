@@ -51,6 +51,11 @@ const userSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+    budget: {
+      type: Number,
+      default: 100,
+      min: [1, "Budget must be at least 1"],
+    },
   },
   {
     timestamps: true,

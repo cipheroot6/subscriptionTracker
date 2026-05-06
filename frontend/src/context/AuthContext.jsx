@@ -66,6 +66,11 @@ export function AuthProvider({ children }) {
     window.location.href = '/sign-in';
   };
 
+  const updateUserData = useCallback((updatedUser) => {
+    setUser(updatedUser);
+    localStorage.setItem('user', JSON.stringify(updatedUser));
+  }, []);
+
   return (
     <AuthContext.Provider value={{
       user,
@@ -73,6 +78,7 @@ export function AuthProvider({ children }) {
       loading,
       signIn,
       logout,
+      updateUserData,
       isAuthenticated: !!token,
     }}>
       {children}

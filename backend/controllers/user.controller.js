@@ -75,6 +75,7 @@ export const updateUser = async (req, res, next) => {
 
     if (name !== undefined) user.name = name.trim();
     if (email !== undefined) user.email = email.trim().toLowerCase();
+    if (req.body.budget !== undefined) user.budget = req.body.budget;
 
     await user.save();
 

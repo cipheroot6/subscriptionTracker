@@ -8,6 +8,7 @@ import errorMiddleware from "./middlewares/error.middleware.js";
 import cookieParser from "cookie-parser";
 import arcjetMiddleware from "./middlewares/arcjet.middleware.js";
 import workflowRouter from "./routes/workflow.routes.js";
+import passport from "./config/passport.js";
 
 const app = express();
 
@@ -15,7 +16,7 @@ app.use(
   cors({
     origin:
       process.env.NODE_ENV === "production"
-        ? process.env.CLIENT_URL // e.g. https://your-app.vercel.app
+        ? process.env.CLIENT_URL 
         : "http://localhost:5173",
     credentials: true,
   }),
@@ -24,6 +25,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(arcjetMiddleware);
+app.use(passport.initialize());
 
 // Connect to DB once and cache it across warm invocations
 let isConnected = false;
@@ -43,6 +45,5 @@ app.use(errorMiddleware);
 
 app.get("/api/v1", (req, res) => res.status(200).json({ status: "ok" }));
 app.get("/api/v1/health", (req, res) => res.status(200).json({ status: "ok" }));
-// app.get("/", (req, res) => res.send("Welcome"));
 
 export default app;

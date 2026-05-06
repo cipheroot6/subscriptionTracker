@@ -336,3 +336,36 @@ export const resetPassword = async (req, res, next) => {
     next(error);
   }
 };
+
+export const googleOAuthCallback = async (req, res, next) => {
+  try {
+    // The user object is automatically attached to req by the Passport middleware
+    const user = req.user;
+
+    if (!user) {
+      const error = new Error("Google authentication failed.");
+      error.status = 401;
+      throw error;
+    }
+
+    if (!JWT_SECRET) {
+      throw new Error("JWT_SECRET missing");
+    }
+
+    // Generate the token exactly like your signIn and verifyEmail controllers
+    const token = jwt.sign({ userid: user._id, role: user.role }, JWT_SECRET, {
+      expiresIn: JWT_EXPIRES_IN,
+    });
+
+    // Determine the correct frontend URL based on the environment
+    const frontendUrl =
+      process.env.NODE_ENV === "production"
+        ? process.env.CLIENT_URL 
+        : "http://localhost:5173";
+
+    // Redirect the user back to the React frontend, passing the token in the URL
+    return res.redirect(`${frontendUrl}/oauth-success?token=${token}`);
+  } catch (error) {
+    next(error);
+  }
+};
