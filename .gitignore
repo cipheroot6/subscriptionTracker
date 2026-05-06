@@ -36,7 +36,8 @@ lerna-debug.log*
 *.sln
 *.sw?
 
-**/**/*.md 
+**/**/*.md
 !README.md
+!specs/**/*.md
 
 .sisyphus
