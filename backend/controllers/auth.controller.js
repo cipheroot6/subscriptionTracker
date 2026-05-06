@@ -337,13 +337,13 @@ export const resetPassword = async (req, res, next) => {
   }
 };
 
-export const googleOAuthCallback = async (req, res, next) => {
+export const oauthCallback = async (req, res, next) => {
   try {
     // The user object is automatically attached to req by the Passport middleware
     const user = req.user;
 
     if (!user) {
-      const error = new Error("Google authentication failed.");
+      const error = new Error("OAuth authentication failed.");
       error.status = 401;
       throw error;
     }

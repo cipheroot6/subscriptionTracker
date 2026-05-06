@@ -8,7 +8,7 @@ import {
   verifyEmail,
   resendVerification,
   resetPassword,
-  googleOAuthCallback
+  oauthCallback
 } from "../controllers/auth.controller.js";
 
 const authRouter = Router();
@@ -28,9 +28,9 @@ authRouter.post("/resend-verification", resendVerification);
 
 authRouter.post("/reset-password", resetPassword);
 
-// GOOGLE OAUTH ROUTES
+// OAUTH ROUTES
 
-// 1. Trigger Google Login
+// 1. Trigger Login
 authRouter.get(
   "/google",
   passport.authenticate("google", {
@@ -39,17 +39,53 @@ authRouter.get(
   })
 );
 
-// 2. Google Callback (Middleware handles Google, Controller handles JWT/Redirect)
+authRouter.get(
+  "/github",
+  passport.authenticate("github", {
+    scope: ["user:email"],
+    session: false,
+  })
+);
+
+authRouter.get(
+  "/discord",
+  passport.authenticate("discord", {
+    scope: ["identify", "email"],
+    session: false,
+  })
+);
+
+// 2. Callbacks (Middleware handles Provider, Controller handles JWT/Redirect)
+const oauthFailureRedirect =
+  process.env.NODE_ENV === "production"
+    ? `${process.env.CLIENT_URL}/login?error=oauth_failed`
+    : "http://localhost:5173/login?error=oauth_failed";
+
 authRouter.get(
   "/google/callback",
   passport.authenticate("google", {
     session: false,
-    failureRedirect:
-      process.env.NODE_ENV === "production"
-        ? `${process.env.CLIENT_URL}/login?error=oauth_failed`
-        : "http://localhost:5173/login?error=oauth_failed",
+    failureRedirect: oauthFailureRedirect,
   }),
-  googleOAuthCallback // <-- Hands off to the controller
+  oauthCallback
+);
+
+authRouter.get(
+  "/github/callback",
+  passport.authenticate("github", {
+    session: false,
+    failureRedirect: oauthFailureRedirect,
+  }),
+  oauthCallback
+);
+
+authRouter.get(
+  "/discord/callback",
+  passport.authenticate("discord", {
+    session: false,
+    failureRedirect: oauthFailureRedirect,
+  }),
+  oauthCallback
 );
 
 export default authRouter;
