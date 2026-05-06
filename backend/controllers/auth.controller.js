@@ -39,6 +39,7 @@ export const signUp = async (req, res, next) => {
       .digest("hex");
     const tokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
 
+    console.log("Verification token (dev):", rawToken);
     // create user
     const newUser = await User.create(
       [
@@ -360,7 +361,7 @@ export const oauthCallback = async (req, res, next) => {
     // Determine the correct frontend URL based on the environment
     const frontendUrl =
       process.env.NODE_ENV === "production"
-        ? process.env.CLIENT_URL 
+        ? process.env.CLIENT_URL
         : "http://localhost:5173";
 
     // Redirect the user back to the React frontend, passing the token in the URL

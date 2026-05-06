@@ -42,6 +42,15 @@ export const updateUser = async (req, res, next) => {
     const user = await User.findById(id);
     let passwordChanged = false;
 
+const targetUser = await User.findById(id);
+if (targetUser.email.toLowerCase() === "demo@subtracker.dev") {
+  const error = new Error(
+    "Cannot update the demo user. You can only update account you created.",
+  );
+  error.status = 403;
+  throw error;
+}
+
     if (!user) {
       const error = new Error("User not found");
       error.status = 404;
@@ -98,8 +107,28 @@ export const updateUser = async (req, res, next) => {
 
 export const deleteUser = async (req, res, next) => {
   try {
-    const { id } = req.params;
+    const { id, email } = req.params;
 
+    if (!id) {
+      const error = new Error("User ID is required");
+      error.status = 400;
+      throw error;
+    }
+
+    if (!req.user) {
+      const error = new Error("User not found");
+      error.status = 404;
+      throw error;
+    }
+
+    const targetUser = await User.findById(id);
+    if (targetUser.email.toLowerCase() === "demo@subtracker.dev") {
+      const error = new Error(
+        "Cannot delete the demo user. You can only delete account you created.",
+      );
+      error.status = 403;
+      throw error;
+    }
     // Only allow users to delete themselves (admins can delete anyone)
     if (req.user._id.toString() !== id && req.user.role !== "admin") {
       const error = new Error("Not authorized to delete this user");

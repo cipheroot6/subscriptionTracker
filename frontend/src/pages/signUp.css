@@ -516,3 +516,33 @@
 .strength-label.strong {
   color: #10b981;
 }
+
+.demo-btn-wrapper {
+  margin-top: 0.75rem;
+  width: 100%;
+}
+
+.demo-btn {
+  width: 100%;
+  padding: 0.625rem 1rem;
+  background-color: transparent;
+  border: 1px solid #27272a;
+  border-radius: 8px;
+  color: var(--text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  font-family: inherit;
+}
+
+.demo-btn:hover {
+  background-color: #18181b;
+  border-color: #3f3f46;
+  color: var(--text-secondary);
+}
+
+.demo-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

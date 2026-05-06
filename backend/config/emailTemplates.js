@@ -272,7 +272,7 @@ export const welcomeEmailTemplate = (userName) => {
             ${stepItem(3, "Explore your analytics and set your monthly budget")}
           </table>
 
-          ${ctaButton("https://subtracker.vercel.app/sign-in", "Go to Dashboard", SUCCESS)}
+          ${ctaButton("https://subscription-tracker-with-admin-panel.vercel.app/sign-in", "Go to Dashboard", SUCCESS)}
 
           <p style="margin:20px 0 0;font-size:14px;color:${TEXT_MUTED};text-align:center;line-height:1.6;">
             Questions? Just reply to this email — we're always happy to help.
