@@ -87,7 +87,7 @@ export default function SignIn() {
     setDemoLoading(true);
     try {
       const res = await api.post("/auth/sign-in", {
-        email: "demo@subscription-tracker.dev",
+        email: "demo@subtracker.dev",
         password: "Demo1234!",
       });
       const { token, user } = res.data.data;
