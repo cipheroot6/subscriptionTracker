@@ -1,18 +1,5 @@
 import './CategoryBreakdown.css';
-
-const toMonthly = (price, frequency) => {
-  const map = { daily: 30, weekly: 4.33, monthly: 1, yearly: 1/12 };
-  return price * (map[frequency] || 1);
-};
-
-const CATEGORY_COLORS = {
-  sports: '#3b82f6', news: '#f59e0b', entertainment: '#ef4444',
-  education: '#10b981', health: '#ec4899', other: '#6b7280',
-};
-const CATEGORY_LABELS = {
-  sports:'Sports', news:'News', entertainment:'Entertainment',
-  education:'Education', health:'Health', other:'Other',
-};
+import { toMonthly, CATEGORY_LABELS, CATEGORY_COLORS } from '../../lib/constants.js';
 
 export default function CategoryBreakdown({ subscriptions }) {
   const active = subscriptions.filter(s => s.status === 'active');

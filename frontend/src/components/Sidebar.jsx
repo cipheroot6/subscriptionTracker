@@ -73,8 +73,8 @@ export default function Sidebar({ isOpen, onClose }) {
           <XIcon />
         </button>
         <div className="sidebar-logo">
-          <img src="/logo.png" alt="SubTracker" className="sidebar-logo-img" />
-          <span className="sidebar-logo-text">SubTracker</span>
+<img src="/logo.png" alt="Subscription Tracker" className="sidebar-logo-img" />
+           <span className="sidebar-logo-text">Subscription Tracker</span>
         </div>
         <nav className="sidebar-nav">
           {navItems.map(({ to, label, icon, end }) => (

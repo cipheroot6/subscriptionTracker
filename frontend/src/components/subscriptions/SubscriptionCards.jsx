@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import api from '../../lib/api';
+import { INITIALS_COLORS } from '../../lib/constants.js';
 import EditSubscriptionModal from '../modals/EditSubscriptionModal';
 import DeleteConfirmModal from '../modals/DeleteConfirmModal';
 import './SubscriptionCards.css';
 
-const INITIALS_COLORS = ['#3b82f6','#10b981','#f59e0b','#ef4444','#a855f7','#ec4899','#06b6d4','#f97316'];
 function getColor(name = '') {
   let hash = 0;
   for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);

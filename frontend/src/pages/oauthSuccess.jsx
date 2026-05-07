@@ -54,7 +54,7 @@ export default function OAuthSuccess() {
             <div className="os-spinner" />
             <h2 className="os-title">Authenticating...</h2>
             <p className="os-text">
-              Securely connecting your Google account and loading your
+              Securely connecting your account and loading your
               dashboard.
             </p>
           </>

@@ -43,7 +43,7 @@ export const updateUser = async (req, res, next) => {
     let passwordChanged = false;
 
 const targetUser = await User.findById(id);
-if (targetUser.email.toLowerCase() === "demo@subtracker.dev") {
+if (targetUser.email.toLowerCase() === "demo@subscription-tracker.dev") {
   const error = new Error(
     "Cannot update the demo user. You can only update account you created.",
   );
@@ -126,7 +126,7 @@ export const deleteUser = async (req, res, next) => {
     }
 
     const targetUser = await User.findById(id);
-    if (targetUser.email.toLowerCase() === "demo@subtracker.dev") {
+    if (targetUser.email.toLowerCase() === "demo@subscription-tracker.dev") {
       const error = new Error(
         "Cannot delete the demo user. You can only delete account you created.",
       );

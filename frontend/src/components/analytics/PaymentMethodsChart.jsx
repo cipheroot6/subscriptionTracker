@@ -1,9 +1,5 @@
 import './PaymentMethodsChart.css';
-
-const toMonthly = (price, frequency) => {
-  const map = { daily: 30, weekly: 4.33, monthly: 1, yearly: 1/12 };
-  return price * (map[frequency] || 1);
-};
+import { toMonthly } from '../../lib/constants.js';
 
 const BAR_COLORS = ['#3b82f6','#10b981','#a855f7','#f59e0b','#ef4444','#ec4899','#06b6d4','#f97316'];
 

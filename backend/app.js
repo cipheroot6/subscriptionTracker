@@ -27,14 +27,28 @@ app.use(cookieParser());
 app.use(arcjetMiddleware);
 app.use(passport.initialize());
 
-// Connect to DB once and cache it across warm invocations
-let isConnected = false;
-app.use(async (req, res, next) => {
-  if (!isConnected) {
-    await connectToDatabase();
-    isConnected = true;
+// Global connection cache — prevents race conditions during cold starts
+let connectionPromise = null;
+
+const ensureDbConnected = async () => {
+  if (!connectionPromise) {
+    connectionPromise = connectToDatabase()
+      .then(() => { console.log('MongoDB connected (cached)'); })
+      .catch((err) => {
+        connectionPromise = null; // reset on failure so retry is possible
+        throw err;
+      });
   }
-  next();
+  return connectionPromise;
+};
+
+app.use(async (req, res, next) => {
+  try {
+    await ensureDbConnected();
+    next();
+  } catch (err) {
+    next(err);
+  }
 });
 
 app.use("/api/v1/auth", authRouter);

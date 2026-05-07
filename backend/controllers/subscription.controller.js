@@ -50,7 +50,7 @@ async function checkBudgetAlert(userId) {
       await user.save();
       sendEmail({
         to: user.email,
-        subject: "⚠️ You've exceeded your SubTracker budget",
+        subject: "⚠️ You've exceeded your Subscription Tracker budget",
         htmlContent: budgetAlertEmailTemplate(
           user.name,
           monthlySpend,
@@ -69,7 +69,7 @@ async function checkBudgetAlert(userId) {
       await user.save();
       sendEmail({
         to: user.email,
-        subject: "🔔 You're at 90% of your SubTracker budget",
+        subject: "🔔 You're at 90% of your Subscription Tracker budget",
         htmlContent: budgetAlertEmailTemplate(
           user.name,
           monthlySpend,

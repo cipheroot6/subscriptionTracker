@@ -87,7 +87,7 @@ export default function SignIn() {
     setDemoLoading(true);
     try {
       const res = await api.post("/auth/sign-in", {
-        email: "demo@subtracker.dev",
+        email: "demo@subscription-tracker.dev",
         password: "Demo1234!",
       });
       const { token, user } = res.data.data;
@@ -182,7 +182,7 @@ export default function SignIn() {
       <div className="signin-branding">
         <div className="branding-content">
           <div className="branding-logo-row">
-            <img src="/logo.png" alt="SubTracker logo" className="branding-logo" />
+            <img src="/logo.png" alt="Subscription Tracker logo" className="branding-logo" />
             <span className="branding-label">Subscription Tracker</span>
           </div>
           <p className="branding-tagline">Your subscriptions, under control.</p>

@@ -61,7 +61,7 @@ export const signUp = async (req, res, next) => {
     // send verification email
     await sendEmail({
       to: email,
-      subject: "Verify your SubTracker account",
+      subject: "Verify your Subscription Tracker account",
       htmlContent: verificationEmailTemplate(name, verificationURL),
     });
 
@@ -221,7 +221,7 @@ export const verifyEmail = async (req, res, next) => {
 
     sendEmail({
       to: user.email,
-      subject: "Welcome to SubTracker!",
+      subject: "Welcome to Subscription Tracker!",
       htmlContent: welcomeEmailTemplate(user.name),
     }).catch((err) => console.error("Welcome email failed:", err));
 
@@ -279,7 +279,7 @@ export const resendVerification = async (req, res, next) => {
 
     await sendEmail({
       to: user.email,
-      subject: "Verify your SubTracker account",
+      subject: "Verify your Subscription Tracker account",
       htmlContent: resendVerificationEmailTemplate(user.name, verificationURL),
     });
 

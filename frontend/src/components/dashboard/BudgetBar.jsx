@@ -2,11 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../lib/api';
 import './BudgetBar.css';
-
-const toMonthly = (price, frequency) => {
-  const map = { daily: 30, weekly: 4.33, monthly: 1, yearly: 1 / 12 };
-  return price * (map[frequency] || 1);
-};
+import { toMonthly } from '../../lib/constants.js';
 
 const PencilIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

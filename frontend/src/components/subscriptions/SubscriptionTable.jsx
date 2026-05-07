@@ -1,24 +1,16 @@
 import { useState } from 'react';
 import api from '../../lib/api';
+import { INITIALS_COLORS, freqLabel, STATUS_CONFIG, CATEGORY_LABELS } from '../../lib/constants.js';
 import EditSubscriptionModal from '../modals/EditSubscriptionModal';
 import DeleteConfirmModal from '../modals/DeleteConfirmModal';
 import './SubscriptionTable.css';
 
-const INITIALS_COLORS = ['#3b82f6','#10b981','#f59e0b','#ef4444','#a855f7','#ec4899','#06b6d4','#f97316'];
 function getColor(name = '') {
   let hash = 0;
   for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
   return INITIALS_COLORS[Math.abs(hash) % INITIALS_COLORS.length];
 }
 function formatDate(d) { return new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }); }
-function freqLabel(f) { return { daily: '/day', weekly: '/wk', monthly: '/mo', yearly: '/yr' }[f] || ''; }
-const STATUS_CONFIG = {
-  active:   { label: 'Active',   cls: 'st-badge-active' },
-  expired:  { label: 'Expired',  cls: 'st-badge-expired' },
-  canceled: { label: 'Canceled', cls: 'st-badge-canceled' },
-  pending:  { label: 'Pending',  cls: 'st-badge-pending' },
-};
-const CATEGORY_LABELS = { sports:'Sports', news:'News', entertainment:'Entertainment', education:'Education', health:'Health', other:'Other' };
 
 export default function SubscriptionTable({ subscriptions, loading, onRefresh }) {
   const [editTarget, setEditTarget] = useState(null);

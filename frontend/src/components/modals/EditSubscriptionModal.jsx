@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import api from '../../lib/api';
+import { addDays, FREQ_DAYS } from '../../lib/constants.js';
 import './AddSubscriptionModal.css';
 
 const XIcon = () => (
@@ -12,14 +13,6 @@ function toDateInput(dateStr) {
   if (!dateStr) return '';
   return new Date(dateStr).toISOString().split('T')[0];
 }
-
-function addDays(dateStr, days) {
-  const d = new Date(dateStr);
-  d.setDate(d.getDate() + days);
-  return d.toISOString().split('T')[0];
-}
-
-const FREQ_DAYS = { daily: 1, weekly: 7, monthly: 30, yearly: 365 };
 
 export default function EditSubscriptionModal({ subscription, onClose, onSuccess }) {
   const [form, setForm] = useState({

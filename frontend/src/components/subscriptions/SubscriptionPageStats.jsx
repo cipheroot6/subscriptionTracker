@@ -1,9 +1,5 @@
 import './SubscriptionPageStats.css';
-
-const toMonthly = (price, frequency) => {
-  const map = { daily: 30, weekly: 4.33, monthly: 1, yearly: 1/12 };
-  return price * (map[frequency] || 1);
-};
+import { toMonthly } from '../../lib/constants.js';
 
 export default function SubscriptionPageStats({ subscriptions }) {
   const active   = subscriptions.filter(s => s.status === 'active').length;

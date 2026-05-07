@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────
-// SubTracker — Premium Email Templates
+// Subscription Tracker — Premium Email Templates
 // Design system: dark header · card blocks · clean footer
 // ─────────────────────────────────────────────
 
@@ -81,7 +81,7 @@ const baseTemplate = (bodyContent) => `<!DOCTYPE html>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>SubTracker</title>
+  <title>Subscription Tracker</title>
 </head>
 <body style="margin:0;padding:0;background-color:${BACKGROUND};font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Inter','Roboto',sans-serif;">
   <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:${BACKGROUND};padding:40px 16px;">
@@ -94,8 +94,8 @@ const baseTemplate = (bodyContent) => `<!DOCTYPE html>
           <!-- Logo bar -->
           <tr>
             <td align="center" style="padding-bottom:24px;">
-              <a href="https://subtracker.vercel.app" target="_blank" style="text-decoration:none;">
-                <span style="font-size:22px;font-weight:800;letter-spacing:-0.5px;color:${TEXT_PRIMARY};">Sub<span style="color:${BRAND};">Tracker</span></span>
+              <a href="https://subscription-tracker-with-admin-panel.vercel.app" target="_blank" style="text-decoration:none;">
+                <span style="font-size:22px;font-weight:800;letter-spacing:-0.5px;color:${TEXT_PRIMARY};">Subscription <span style="color:${BRAND};">Tracker</span></span>
               </a>
             </td>
           </tr>
@@ -110,9 +110,9 @@ const baseTemplate = (bodyContent) => `<!DOCTYPE html>
                 <tr><td style="padding:0 32px;"><div style="height:1px;background:${BORDER};"></div></td></tr>
                 <tr>
                   <td style="padding:24px 32px;text-align:center;">
-                    <p style="margin:0 0 6px;font-size:13px;color:${TEXT_MUTED};">© 2026 SubTracker · Smart Subscription Management</p>
+                    <p style="margin:0 0 6px;font-size:13px;color:${TEXT_MUTED};">© 2026 Subscription Tracker · Smart Subscription Management</p>
                     <p style="margin:0;font-size:12px;color:#9ca3af;">
-                      You received this email because you have an account at SubTracker.<br/>
+                      You received this email because you have an account at Subscription Tracker.<br/>
                       If you have questions, reply to this email.
                     </p>
                   </td>
@@ -155,7 +155,7 @@ export const verificationEmailTemplate = (userName, verificationUrl) => {
 
           <p style="margin:0 0 20px;font-size:16px;color:${TEXT_PRIMARY};">Hi <strong>${userName}</strong>,</p>
           <p style="margin:0 0 20px;font-size:15px;color:${TEXT_MUTED};line-height:1.7;">
-            Thanks for creating your SubTracker account. To get started, we just need to confirm this is really you.
+            Thanks for creating your Subscription Tracker account. To get started, we just need to confirm this is really you.
             Click the button below to verify your email address.
           </p>
 
@@ -203,7 +203,7 @@ export const passwordResetEmailTemplate = (userName, resetUrl) => {
 
           <p style="margin:0 0 20px;font-size:16px;color:${TEXT_PRIMARY};">Hi <strong>${userName}</strong>,</p>
           <p style="margin:0 0 20px;font-size:15px;color:${TEXT_MUTED};line-height:1.7;">
-            We received a request to reset the password for your SubTracker account.
+            We received a request to reset the password for your Subscription Tracker account.
             Click the button below to choose a new password.
           </p>
 
@@ -220,7 +220,7 @@ export const passwordResetEmailTemplate = (userName, resetUrl) => {
 
           ${securityNote(
             "#374151", "#f9fafb",
-            `🔒 <strong>Didn't request this?</strong> Your password has <em>not</em> been changed. You can safely ignore this email. If you're concerned about your account's security, please <a href="mailto:support@subtracker.com" style="color:${BRAND};text-decoration:none;">contact support</a>.`
+            `🔒 <strong>Didn't request this?</strong> Your password has <em>not</em> been changed. You can safely ignore this email. If you're concerned about your account's security, please <a href="mailto:support@subscription-tracker.com" style="color:${BRAND};text-decoration:none;">contact support</a>.`
           )}
 
         </td>
@@ -251,7 +251,7 @@ export const welcomeEmailTemplate = (userName) => {
         <td style="padding:32px 32px 24px;">
 
           <p style="margin:0 0 20px;font-size:15px;color:${TEXT_MUTED};line-height:1.7;">
-            Your email is verified and your SubTracker account is fully activated.
+            Your email is verified and your Subscription Tracker account is fully activated.
             Here's a quick look at what you can do:
           </p>
 
@@ -307,7 +307,7 @@ export const resendVerificationEmailTemplate = (userName, verificationUrl) => {
 
           <p style="margin:0 0 20px;font-size:16px;color:${TEXT_PRIMARY};">Hi <strong>${userName}</strong>,</p>
           <p style="margin:0 0 20px;font-size:15px;color:${TEXT_MUTED};line-height:1.7;">
-            Here's your fresh verification link. Click the button below to verify your email address and activate your SubTracker account.
+            Here's your fresh verification link. Click the button below to verify your email address and activate your Subscription Tracker account.
           </p>
 
           ${ctaButton(verificationUrl, "Verify Email Address")}
@@ -354,7 +354,7 @@ export const passwordChangedEmailTemplate = (userName) => {
 
           <p style="margin:0 0 20px;font-size:16px;color:${TEXT_PRIMARY};">Hi <strong>${userName}</strong>,</p>
           <p style="margin:0 0 20px;font-size:15px;color:${TEXT_MUTED};line-height:1.7;">
-            This is a confirmation that the password for your SubTracker account was changed on
+            This is a confirmation that the password for your Subscription Tracker account was changed on
             <strong>${new Date().toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}</strong>.
           </p>
 
@@ -364,7 +364,7 @@ export const passwordChangedEmailTemplate = (userName) => {
 
           ${securityNote(
             "#7f1d1d", DANGER_BG,
-            `🔒 <strong>Didn't make this change?</strong> Your account may be compromised. Please <a href="mailto:support@subtracker.com" style="color:${DANGER};font-weight:600;text-decoration:none;">contact support immediately</a> and change your password from a trusted device.`
+            `🔒 <strong>Didn't make this change?</strong> Your account may be compromised. Please <a href="mailto:support@subscription-tracker.com" style="color:${DANGER};font-weight:600;text-decoration:none;">contact support immediately</a> and change your password from a trusted device.`
           )}
 
           <p style="margin:20px 0 0;font-size:14px;color:${TEXT_MUTED};line-height:1.7;">
@@ -404,7 +404,7 @@ export const subscriptionAddedEmailTemplate = (
 
           <p style="margin:0 0 20px;font-size:16px;color:${TEXT_PRIMARY};">Hi <strong>${userName}</strong>,</p>
           <p style="margin:0 0 8px;font-size:15px;color:${TEXT_MUTED};line-height:1.7;">
-            Your subscription has been added to SubTracker. Here's a summary:
+            Your subscription has been added to Subscription Tracker. Here's a summary:
           </p>
 
           ${infoCard(BRAND, BRAND_BG,
@@ -415,12 +415,12 @@ export const subscriptionAddedEmailTemplate = (
 
           <p style="margin:0 0 14px;font-size:14px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:${TEXT_PRIMARY};">What happens next</p>
           <table cellpadding="0" cellspacing="0" border="0" style="width:100%;margin-bottom:24px;">
-            ${featureItem("✅", "SubTracker will monitor this subscription for you")}
+            ${featureItem("✅", "Subscription Tracker will monitor this subscription for you")}
             ${featureItem("🔔", "You'll receive email reminders before each renewal")}
             ${featureItem("📊", "It'll appear in your spending analytics immediately")}
           </table>
 
-          ${ctaButton("https://subtracker.vercel.app/dashboard", "View Dashboard")}
+          ${ctaButton("https://subscription-tracker-with-admin-panel.vercel.app/dashboard", "View Dashboard")}
 
         </td>
       </tr>
@@ -484,7 +484,7 @@ export const renewalReminderEmailTemplate = (
             ${featureItem("📋", "Check for any plan changes or price adjustments")}
           </table>
 
-          ${ctaButton("https://subtracker.vercel.app/dashboard", "Manage Subscriptions", isUrgent ? WARNING : BRAND)}
+          ${ctaButton("https://subscription-tracker-with-admin-panel.vercel.app/dashboard", "Manage Subscriptions", isUrgent ? WARNING : BRAND)}
 
           <p style="margin:20px 0 0;font-size:14px;color:${TEXT_MUTED};text-align:center;line-height:1.6;">
             To stop receiving reminders for this subscription, update or cancel it from your dashboard.

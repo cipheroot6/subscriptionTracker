@@ -1,19 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import './RecentActivity.css';
-
-const INITIALS_COLORS = [
-  '#3b82f6', '#10b981', '#f59e0b', '#ef4444',
-  '#a855f7', '#ec4899', '#06b6d4', '#f97316',
-];
+import { CATEGORY_LABELS, INITIALS_COLORS, freqLabel } from '../../lib/constants.js';
 
 function getColor(name = '') {
   let hash = 0;
   for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
   return INITIALS_COLORS[Math.abs(hash) % INITIALS_COLORS.length];
-}
-
-function freqLabel(f) {
-  return { daily: '/day', weekly: '/wk', monthly: '/mo', yearly: '/yr' }[f] || '';
 }
 
 const STATUS_CONFIG = {

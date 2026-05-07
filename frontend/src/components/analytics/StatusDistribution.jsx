@@ -1,11 +1,5 @@
 import './StatusDistribution.css';
-
-const STATUS_CONFIG = {
-  active:   { label: 'Active',   color: '#10b981' },
-  canceled: { label: 'Canceled', color: '#64748b' },
-  expired:  { label: 'Expired',  color: '#ef4444' },
-  pending:  { label: 'Pending',  color: '#f59e0b' },
-};
+import { STATUS_CONFIG } from '../../lib/constants.js';
 
 export default function StatusDistribution({ subscriptions }) {
   const total = subscriptions.length;

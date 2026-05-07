@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../lib/api';
 import './AddSubscriptionModal.css';
+import { addDays, FREQ_DAYS } from '../../lib/constants.js';
 
 const XIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -19,14 +20,6 @@ const INITIAL = {
   startDate: new Date().toISOString().split('T')[0],
   renewalDate: '',
 };
-
-function addDays(dateStr, days) {
-  const d = new Date(dateStr);
-  d.setDate(d.getDate() + days);
-  return d.toISOString().split('T')[0];
-}
-
-const FREQ_DAYS = { daily: 1, weekly: 7, monthly: 30, yearly: 365 };
 
 export default function AddSubscriptionModal({ onClose, onSuccess }) {
   const { user } = useAuth();

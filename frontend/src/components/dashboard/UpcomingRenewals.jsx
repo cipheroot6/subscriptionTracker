@@ -1,4 +1,5 @@
 import './UpcomingRenewals.css';
+import { INITIALS_COLORS } from '../../lib/constants.js';
 
 function daysUntil(dateStr) {
   const now = new Date();
@@ -19,11 +20,6 @@ function chipLabel(days) {
   if (days === 1) return 'Tomorrow';
   return `${days}d`;
 }
-
-const INITIALS_COLORS = [
-  '#3b82f6', '#10b981', '#f59e0b', '#ef4444',
-  '#a855f7', '#ec4899', '#06b6d4', '#f97316',
-];
 
 function getColor(name = '') {
   let hash = 0;

@@ -36,7 +36,7 @@ passport.use(
 
           sendEmail({
             to: email,
-            subject: "Welcome to SubTracker!",
+            subject: "Welcome to Subscription Tracker!",
             htmlContent: welcomeEmailTemplate(profile.displayName),
           }).catch((err) => console.error("OAuth welcome email (Google) failed:", err));
         }
@@ -77,7 +77,7 @@ passport.use(
 
           sendEmail({
             to: email,
-            subject: "Welcome to SubTracker!",
+            subject: "Welcome to Subscription Tracker!",
             htmlContent: welcomeEmailTemplate(profile.displayName || profile.username),
           }).catch((err) => console.error("OAuth welcome email (GitHub) failed:", err));
         }
@@ -118,7 +118,7 @@ passport.use(
 
           sendEmail({
             to: email,
-            subject: "Welcome to SubTracker!",
+            subject: "Welcome to Subscription Tracker!",
             htmlContent: welcomeEmailTemplate(profile.username),
           }).catch((err) => console.error("OAuth welcome email (Discord) failed:", err));
         }

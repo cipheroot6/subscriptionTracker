@@ -2,11 +2,7 @@ import { useState } from 'react';
 import api from '../../lib/api';
 import DeleteConfirmModal from '../modals/DeleteConfirmModal';
 import './SubscriptionList.css';
-
-const INITIALS_COLORS = [
-  '#3b82f6', '#10b981', '#f59e0b', '#ef4444',
-  '#a855f7', '#ec4899', '#06b6d4', '#f97316',
-];
+import { CATEGORY_LABELS, INITIALS_COLORS, freqLabel } from '../../lib/constants.js';
 
 function getColor(name = '') {
   let hash = 0;
@@ -18,11 +14,6 @@ function formatDate(dateStr) {
   return new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
-function freqLabel(f) {
-  const map = { daily: '/day', weekly: '/wk', monthly: '/mo', yearly: '/yr' };
-  return map[f] || '';
-}
-
 const STATUS_CONFIG = {
   active:   { label: 'Active',   cls: 'badge-active' },
   expired:  { label: 'Expired',  cls: 'badge-expired' },
@@ -30,10 +21,7 @@ const STATUS_CONFIG = {
   pending:  { label: 'Pending',  cls: 'badge-pending' },
 };
 
-const CATEGORY_LABELS = {
-  sports: 'Sports', news: 'News', entertainment: 'Entertainment',
-  education: 'Education', health: 'Health', other: 'Other',
-};
+
 
 export default function SubscriptionList({ subscriptions, loading, onRefresh, onAdd }) {
   const [filterStatus, setFilterStatus] = useState('all');

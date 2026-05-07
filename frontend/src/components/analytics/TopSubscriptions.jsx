@@ -1,11 +1,6 @@
 import './TopSubscriptions.css';
+import { toMonthly, INITIALS_COLORS } from '../../lib/constants.js';
 
-const toMonthly = (price, frequency) => {
-  const map = { daily: 30, weekly: 4.33, monthly: 1, yearly: 1/12 };
-  return price * (map[frequency] || 1);
-};
-
-const INITIALS_COLORS = ['#3b82f6','#10b981','#f59e0b','#ef4444','#a855f7','#ec4899','#06b6d4','#f97316'];
 function getColor(name = '') {
   let hash = 0;
   for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
