@@ -38,10 +38,10 @@ export default function LpAbout() {
             </div>
 
             <div className="lp-about-ctas">
-              <a href="mailto:hello@example.com" className="lp-btn-primary lp-btn-sm">
+              <a href="mailto:cipheroot@proton.me" className="lp-btn-primary lp-btn-sm">
                 Get in touch <ExternalLinkIcon />
               </a>
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="lp-btn-ghost lp-btn-sm">
+              <a href="https://github.com/cipheroot6" target="_blank" rel="noopener noreferrer" className="lp-btn-ghost lp-btn-sm">
                 View on GitHub
               </a>
             </div>
