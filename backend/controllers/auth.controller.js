@@ -39,7 +39,6 @@ export const signUp = async (req, res, next) => {
       .digest("hex");
     const tokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
 
-    console.log("Verification token (dev):", rawToken);
     // create user
     const newUser = await User.create(
       [
@@ -65,8 +64,6 @@ export const signUp = async (req, res, next) => {
       subject: "Verify your SubTracker account",
       htmlContent: verificationEmailTemplate(name, verificationURL),
     });
-
-    console.log("Verification URL (dev):", verificationURL);
 
     await session.commitTransaction();
     session.endSession();
@@ -286,7 +283,6 @@ export const resendVerification = async (req, res, next) => {
       htmlContent: resendVerificationEmailTemplate(user.name, verificationURL),
     });
 
-    console.log("Resend verification URL (dev):", verificationURL);
 
     return res.status(200).json({
       success: true,

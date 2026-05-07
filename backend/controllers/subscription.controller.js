@@ -1,9 +1,94 @@
 import Subscription from "../models/subscription.model.js";
+import User from "../models/user.model.js";
 import dayjs from "dayjs";
 import { workflowClient } from "../config/upstash.js";
 import { SERVER_URL } from "../config/env.js";
 import { sendEmail } from "../config/brevo.js";
-import { subscriptionAddedEmailTemplate } from "../config/emailTemplates.js";
+import {
+  subscriptionAddedEmailTemplate,
+  budgetAlertEmailTemplate,
+} from "../config/emailTemplates.js";
+
+// Normalise any subscription to a monthly cost for budget calculations
+const toMonthlyAmount = (price, frequency) => {
+  switch (frequency) {
+    case "daily":   return price * 30;
+    case "weekly":  return price * 4.33;
+    case "yearly":  return price / 12;
+    default:        return price; // monthly
+  }
+};
+
+// Check budget thresholds and fire an alert email if needed.
+// Sends at most one email per threshold level (tracked via budgetAlertLevel).
+async function checkBudgetAlert(userId) {
+  try {
+    const user = await User.findById(userId);
+    if (!user || !user.budget) return;
+
+    const activeSubs = await Subscription.find({
+      user: userId,
+      status: "active",
+    });
+
+    const monthlySpend = activeSubs.reduce(
+      (sum, s) => sum + toMonthlyAmount(s.price, s.frequency),
+      0,
+    );
+
+    const percentage = (monthlySpend / user.budget) * 100;
+
+    // Build enriched list for the email template
+    const subList = activeSubs.map((s) => ({
+      name:          s.name,
+      category:      s.category,
+      monthlyAmount: toMonthlyAmount(s.price, s.frequency),
+    }));
+
+    if (percentage >= 100 && user.budgetAlertLevel !== "100") {
+      user.budgetAlertLevel = "100";
+      await user.save();
+      sendEmail({
+        to: user.email,
+        subject: "⚠️ You've exceeded your SubTracker budget",
+        htmlContent: budgetAlertEmailTemplate(
+          user.name,
+          monthlySpend,
+          user.budget,
+          percentage,
+          subList,
+        ),
+      }).catch((err) => console.error("Budget 100% alert email failed:", err));
+    } else if (
+      percentage >= 90 &&
+      percentage < 100 &&
+      user.budgetAlertLevel !== "90" &&
+      user.budgetAlertLevel !== "100"
+    ) {
+      user.budgetAlertLevel = "90";
+      await user.save();
+      sendEmail({
+        to: user.email,
+        subject: "🔔 You're at 90% of your SubTracker budget",
+        htmlContent: budgetAlertEmailTemplate(
+          user.name,
+          monthlySpend,
+          user.budget,
+          percentage,
+          subList,
+        ),
+      }).catch((err) => console.error("Budget 90% alert email failed:", err));
+    } else if (percentage < 90) {
+      // Reset so alerts fire again if spend drops and rises once more
+      if (user.budgetAlertLevel !== null) {
+        user.budgetAlertLevel = null;
+        await user.save();
+      }
+    }
+  } catch (err) {
+    console.error("checkBudgetAlert error:", err);
+  }
+}
 
 export const createSubscription = async (req, res, next) => {
   try {
@@ -26,6 +111,9 @@ export const createSubscription = async (req, res, next) => {
         dayjs(renewalDate).format("MMMM D, YYYY"),
       ),
     }).catch((err) => console.error("Subscription added email failed:", err));
+
+    // Check budget thresholds after adding
+    checkBudgetAlert(req.user._id);
 
     // Trigger workflow separately — don't let a trigger failure
     // kill the subscription creation or return an error to the client.
@@ -73,6 +161,9 @@ export const deleteSubscription = async (req, res, next) => {
     }
 
     await subscription.deleteOne();
+
+    // Recalculate budget after removal (may drop below threshold → reset alert level)
+    checkBudgetAlert(subscription.user);
 
     res.status(200).json({
       success: true,
@@ -124,6 +215,10 @@ export const updateSubscription = async (req, res, next) => {
       req.body,
       { new: true, runValidators: true },
     );
+
+    // Re-check budget when price/frequency may have changed
+    checkBudgetAlert(req.user._id);
+
     res.status(200).json({ success: true, data: updated });
   } catch (error) {
     next(error);
@@ -148,6 +243,10 @@ export const cancelSubscription = async (req, res, next) => {
     }
     subscription.status = "canceled";
     await subscription.save();
+
+    // Re-check budget after cancellation removes cost from monthly total
+    checkBudgetAlert(req.user._id);
+
     res.status(200).json({ success: true, data: subscription });
   } catch (error) {
     next(error);

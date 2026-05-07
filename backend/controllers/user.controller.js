@@ -84,7 +84,11 @@ if (targetUser.email.toLowerCase() === "demo@subtracker.dev") {
 
     if (name !== undefined) user.name = name.trim();
     if (email !== undefined) user.email = email.trim().toLowerCase();
-    if (req.body.budget !== undefined) user.budget = req.body.budget;
+    if (req.body.budget !== undefined) {
+      user.budget = req.body.budget;
+      // Reset alert level so thresholds fire fresh against the new budget
+      user.budgetAlertLevel = null;
+    }
 
     await user.save();
 

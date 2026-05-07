@@ -496,6 +496,115 @@ export const renewalReminderEmailTemplate = (
   return baseTemplate(body);
 };
 
+// ─────────────────────────────────────────────────────────────────────────────
+// 8. Budget Alert (90% warning and 100%+ exceeded)
+// ─────────────────────────────────────────────────────────────────────────────
+
+export const budgetAlertEmailTemplate = (
+  userName,
+  monthlySpend,
+  budget,
+  percentage,
+  subscriptions = [],
+) => {
+  const isOver      = percentage >= 100;
+  const accentColor = isOver ? DANGER   : WARNING;
+  const accentBg    = isOver ? DANGER_BG : WARNING_BG;
+  const headerBg    = isOver
+    ? "linear-gradient(135deg,#450a0a 0%,#7f1d1d 100%)"
+    : "linear-gradient(135deg,#451a03 0%,#78350f 100%)";
+  const badgeColor  = isOver ? "#7f1d1d" : "#78350f";
+  const badgeBg     = isOver ? "#fecaca" : "#fde68a";
+  const headingText = isOver
+    ? "You've exceeded your monthly budget"
+    : "You're approaching your monthly budget";
+  const subText = isOver
+    ? `Your spending has gone over the ${budget.toFixed(2)} budget you set. Here's a breakdown of your current subscriptions.`
+    : `You've used ${Math.round(percentage)}% of your ${budget.toFixed(2)} monthly budget. Here's where your money is going.`;
+
+  const barWidth = Math.min(Math.round(percentage), 100);
+  const barColor = isOver ? DANGER : WARNING;
+
+  const subRows = subscriptions
+    .slice(0, 8)
+    .map(
+      (s) =>
+        `<tr>
+          <td style="padding:8px 0;font-size:14px;color:${TEXT_PRIMARY};border-bottom:1px solid ${BORDER};">${s.name}</td>
+          <td style="padding:8px 0;font-size:13px;color:${TEXT_MUTED};border-bottom:1px solid ${BORDER};">${s.category}</td>
+          <td style="padding:8px 0;font-size:14px;font-weight:600;color:${TEXT_PRIMARY};text-align:right;border-bottom:1px solid ${BORDER};">${s.monthlyAmount.toFixed(2)}<span style="font-size:11px;font-weight:400;color:${TEXT_MUTED};">/mo</span></td>
+        </tr>`,
+    )
+    .join("");
+
+  const body = `
+    <!-- Header -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td style="padding:40px 32px 32px;background:${headerBg};border-radius:14px 14px 0 0;">
+          <p style="margin:0 0 10px;font-size:13px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Budget Alert</p>
+          <h1 style="margin:0;font-size:26px;font-weight:700;color:#ffffff;letter-spacing:-0.5px;line-height:1.3;">${headingText}</h1>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Body -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td style="padding:32px 32px 24px;">
+
+          <p style="margin:0 0 20px;font-size:16px;color:${TEXT_PRIMARY};">Hi <strong>${userName}</strong>,</p>
+          <p style="margin:0 0 24px;font-size:15px;color:${TEXT_MUTED};line-height:1.7;">${subText}</p>
+
+          ${infoCard(accentColor, accentBg,
+            infoRow("Monthly Spend", `<strong style="font-size:20px;">${monthlySpend.toFixed(2)}</strong>`) +
+            infoRow("Your Budget", `${budget.toFixed(2)}`) +
+            infoRow("Usage", `${pill(`${Math.round(percentage)}%`, badgeColor, badgeBg)}`)
+          )}
+
+          <!-- Progress bar -->
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:28px;">
+            <tr>
+              <td>
+                <div style="height:8px;background:#e5e7eb;border-radius:8px;overflow:hidden;">
+                  <div style="height:100%;width:${barWidth}%;background:${barColor};border-radius:8px;"></div>
+                </div>
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:6px;">
+                  <tr>
+                    <td style="font-size:12px;color:${TEXT_MUTED};">$0</td>
+                    <td style="font-size:12px;color:${TEXT_MUTED};text-align:right;">${budget.toFixed(2)} budget</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+
+          ${subscriptions.length > 0 ? `
+          <!-- Subscription breakdown -->
+          <p style="margin:0 0 12px;font-size:14px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:${TEXT_PRIMARY};">Subscription breakdown</p>
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:24px;">
+            <thead>
+              <tr>
+                <th style="padding:8px 0;font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:${TEXT_MUTED};text-align:left;border-bottom:2px solid ${BORDER};">Name</th>
+                <th style="padding:8px 0;font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:${TEXT_MUTED};text-align:left;border-bottom:2px solid ${BORDER};">Category</th>
+                <th style="padding:8px 0;font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:${TEXT_MUTED};text-align:right;border-bottom:2px solid ${BORDER};">Cost</th>
+              </tr>
+            </thead>
+            <tbody>${subRows}</tbody>
+          </table>` : ""}
+
+          ${ctaButton("https://subscription-tracker-with-admin-panel.vercel.app/sign-in", "Review Subscriptions", isOver ? DANGER : WARNING)}
+
+          <p style="margin:20px 0 0;font-size:13px;color:${TEXT_MUTED};text-align:center;line-height:1.6;">
+            You can update your monthly budget in your account settings.
+          </p>
+
+        </td>
+      </tr>
+    </table>`;
+  return baseTemplate(body);
+};
+
 // ─── Default export ────────────────────────────────────────────────────────
 
 export default {
@@ -506,4 +615,5 @@ export default {
   passwordChangedEmailTemplate,
   subscriptionAddedEmailTemplate,
   renewalReminderEmailTemplate,
+  budgetAlertEmailTemplate,
 };

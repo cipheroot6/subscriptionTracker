@@ -56,6 +56,11 @@ const userSchema = new mongoose.Schema(
       default: 100,
       min: [1, "Budget must be at least 1"],
     },
+    budgetAlertLevel: {
+      type: String,
+      enum: [null, "90", "100"],
+      default: null,
+    },
   },
   {
     timestamps: true,

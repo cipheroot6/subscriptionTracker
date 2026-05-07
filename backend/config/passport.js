@@ -5,6 +5,8 @@ import { Strategy as DiscordStrategy } from "passport-discord";
 import crypto from "crypto";
 import bcrypt from "bcryptjs";
 import User from "../models/user.model.js";
+import { sendEmail } from "./brevo.js";
+import { welcomeEmailTemplate } from "./emailTemplates.js";
 
 passport.use(
   new GoogleStrategy(
@@ -31,6 +33,12 @@ passport.use(
             password: hashedPassword,
             isVerified: true,
           });
+
+          sendEmail({
+            to: email,
+            subject: "Welcome to SubTracker!",
+            htmlContent: welcomeEmailTemplate(profile.displayName),
+          }).catch((err) => console.error("OAuth welcome email (Google) failed:", err));
         }
 
         return done(null, user);
@@ -66,6 +74,12 @@ passport.use(
             password: hashedPassword,
             isVerified: true,
           });
+
+          sendEmail({
+            to: email,
+            subject: "Welcome to SubTracker!",
+            htmlContent: welcomeEmailTemplate(profile.displayName || profile.username),
+          }).catch((err) => console.error("OAuth welcome email (GitHub) failed:", err));
         }
 
         return done(null, user);
@@ -101,6 +115,12 @@ passport.use(
             password: hashedPassword,
             isVerified: true,
           });
+
+          sendEmail({
+            to: email,
+            subject: "Welcome to SubTracker!",
+            htmlContent: welcomeEmailTemplate(profile.username),
+          }).catch((err) => console.error("OAuth welcome email (Discord) failed:", err));
         }
 
         return done(null, user);
